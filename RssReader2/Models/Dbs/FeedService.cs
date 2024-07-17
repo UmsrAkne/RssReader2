@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RssReader2.Models.Dbs
 {
-    public class FeedService
+    public class FeedService : IFeedProvider
     {
         private readonly IRepository<Feed> feedRepository;
 
