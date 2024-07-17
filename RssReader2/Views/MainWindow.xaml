@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:RssReader2.ViewModels"
-    Title="{Binding TitleBarText}"
+    Title="{Binding TitleBarText.Title}"
     Width="525"
     Height="350"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
