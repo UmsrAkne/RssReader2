@@ -15,9 +15,9 @@ namespace RssReader2.Models.Dbs
             dbSet = this.context.Set<Feed>();
         }
 
-        public IEnumerable<Feed> GetAll()
+        public IQueryable<Feed> GetAll()
         {
-            return dbSet.ToList();
+            return dbSet.AsQueryable();
         }
 
         public Feed GetById(int id)

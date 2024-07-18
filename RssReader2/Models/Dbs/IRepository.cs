@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RssReader2.Models.Dbs
 {
     public interface IRepository<T>
         where T : class
     {
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
 
         T GetById(int id);
 
