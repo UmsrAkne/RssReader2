@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Prism.Ioc;
+using RssReader2.Models;
 using RssReader2.Views;
 
 namespace RssReader2
@@ -16,6 +17,11 @@ namespace RssReader2
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #if DEBUG
+                containerRegistry.Register<IFeedProvider, DummyFeedProvider>();
+            #else
+                containerRegistry.Register<IFeedProvider, FeedService>();
+            #endif
         }
     }
 }
