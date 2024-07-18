@@ -9,14 +9,14 @@ using System.Xml;
 
 namespace RssReader2.Models
 {
-    public class FeedReader
+    public static class FeedReader
     {
         /// <summary>
         /// 指定した URL から Feed のリストを生成しあｍす。
         /// </summary>
         /// <param name="url">読み込みたいURL。</param>
         /// <returns>読み込んだリストを取得します。読み込みに失敗した場合、空のリストを返します。</returns>
-        public static async Task<IEnumerable<Feed>> GetRssFeeds(string url)
+        public static async Task<IEnumerable<Feed>> GetRssFeedsAsync(string url)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace RssReader2.Models
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
             }
 
             return list;
