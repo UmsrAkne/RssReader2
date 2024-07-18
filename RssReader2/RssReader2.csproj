@@ -13,5 +13,6 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+        <PackageReference Include="System.ServiceModel.Syndication" Version="9.0.0-preview.6.24327.7" />
     </ItemGroup>
 </Project>
