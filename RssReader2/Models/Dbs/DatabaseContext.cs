@@ -11,6 +11,8 @@ namespace RssReader2.Models.Dbs
 
         public DbSet<WebSite> WebSites { get; set; }
 
+        public DbSet<WebSiteGroup> WebSiteGroups { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string dbFileName = "db.sqlite";
