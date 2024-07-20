@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Prism.Mvvm;
 using RssReader2.Models;
+using RssReader2.Models.Dbs;
 
 namespace RssReader2.ViewModels
 {
@@ -12,11 +13,14 @@ namespace RssReader2.ViewModels
             Feeds = new ObservableCollection<Feed>(new DummyFeedProvider().GetAllFeeds());
         }
 
-        public MainWindowViewModel(IFeedProvider feedProvider)
+        public MainWindowViewModel(IFeedProvider feedProvider, FeedService feedService)
         {
             FeedProvider = feedProvider;
             Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
+            FeedService = feedService;
         }
+
+        public FeedService FeedService { get; set; }
 
         public TextWrapper TitleBarText { get; } = new ();
 
