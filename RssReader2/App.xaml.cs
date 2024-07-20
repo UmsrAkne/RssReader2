@@ -31,9 +31,9 @@ namespace RssReader2
             d.Database.EnsureCreated();
 
             #if DEBUG
-                containerRegistry.Register<IFeedProvider, DummyFeedProvider>();
+            containerRegistry.Register<IFeedProvider, DummyFeedProvider>();
             #else
-                containerRegistry.Register<IFeedProvider, FeedService>();
+            containerRegistry.Register<IFeedProvider, FeedService>();
             #endif
         }
     }
