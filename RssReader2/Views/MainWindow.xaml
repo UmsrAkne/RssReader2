@@ -15,7 +15,33 @@
     mc:Ignorable="d">
     <Grid>
 
-        <ListView ItemsSource="{Binding Feeds}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Menu
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <MenuItem Header="File" />
+        </Menu>
+
+        <TreeView
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="0" />
+
+        <ListView
+            Grid.Row="1"
+            Grid.Column="1"
+            ItemsSource="{Binding Feeds}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Feed}">
                     <StackPanel Orientation="Horizontal">
