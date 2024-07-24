@@ -36,7 +36,17 @@
         <TreeView
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="0" />
+            Grid.Column="0"
+            ItemsSource="{Binding WebSiteTreeViewItems}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock
+                        Margin="2,0"
+                        Padding="4,0"
+                        Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
 
         <ListView
             Grid.Row="1"

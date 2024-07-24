@@ -12,6 +12,7 @@ namespace RssReader2.ViewModels
         public MainWindowViewModel()
         {
             Feeds = new ObservableCollection<Feed>(new DummyFeedProvider().GetAllFeeds());
+            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
         }
 
         public MainWindowViewModel(IContainerProvider containerProvider)
@@ -19,6 +20,9 @@ namespace RssReader2.ViewModels
             FeedProvider = containerProvider.Resolve<IFeedProvider>();
             FeedService = containerProvider.Resolve<FeedService>();
             Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
+
+            var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
+            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
         }
 
         public FeedService FeedService { get; set; }
@@ -26,6 +30,8 @@ namespace RssReader2.ViewModels
         public TextWrapper TitleBarText { get; } = new ();
 
         public ObservableCollection<Feed> Feeds { get; set; }
+
+        public ObservableCollection<IWebSiteTreeViewItem> WebSiteTreeViewItems { get; set; } = new ();
 
         private IFeedProvider FeedProvider { get; set; }
     }
