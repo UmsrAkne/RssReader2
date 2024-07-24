@@ -13,6 +13,8 @@ namespace RssReader2.Models.Dbs
 
         public DbSet<WebSiteGroup> WebSiteGroups { get; set; }
 
+        public DbSet<NgWord> NgWords { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string dbFileName = "db.sqlite";
