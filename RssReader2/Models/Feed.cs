@@ -27,6 +27,18 @@ namespace RssReader2.Models
         [Required]
         public string Url { get; set; } = string.Empty;
 
+        /// <summary>
+        /// このフィードが Ngワード を含んでいるかを表します。
+        /// </summary>
+        [Required]
+        public bool ContainsNgWord { get; set; }
+
+        /// <summary>
+        /// このフィードが Ngワード を含んでいるかを確認した日付です。
+        /// </summary>
+        [Required]
+        public DateTime LastValidationDate { get; set; }
+
         [Required]
         public bool IsRead { get => isRead; set => SetProperty(ref isRead, value); }
     }
