@@ -22,18 +22,22 @@ namespace RssReader2
             containerRegistry.RegisterSingleton<IRepository<Feed>, FeedRepository>();
             containerRegistry.RegisterSingleton<IRepository<WebSite>, WebSiteRepository>();
             containerRegistry.RegisterSingleton<IRepository<WebSiteGroup>, WebSiteGroupRepository>();
+            containerRegistry.RegisterSingleton<IRepository<NgWord>, NgWordRepository>();
 
             containerRegistry.RegisterSingleton<FeedService>();
             containerRegistry.RegisterSingleton<WebSiteService>();
             containerRegistry.RegisterSingleton<WebSiteGroupService>();
+            containerRegistry.RegisterSingleton<NgWordService>();
 
             var d = Container.Resolve<DatabaseContext>();
             d.Database.EnsureCreated();
 
             #if DEBUG
             containerRegistry.Register<IFeedProvider, DummyFeedProvider>();
+            containerRegistry.Register<IWebSiteProvider, DummyWebSiteProvider>();
             #else
             containerRegistry.Register<IFeedProvider, FeedService>();
+            containerRegistry.Register<IWebSiteProvider, WebSiteService>();
             #endif
         }
     }

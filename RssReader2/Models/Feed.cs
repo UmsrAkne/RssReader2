@@ -15,8 +15,11 @@ namespace RssReader2.Models
         [Required]
         public int ParentSiteId { get; set; }
 
+        /// <summary>
+        /// このフィードの記事が公開された日時。
+        /// </summary>
         [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime PublishedAt { get; set; }
 
         [Required]
         public string Description { get; set; } = string.Empty;
@@ -26,6 +29,18 @@ namespace RssReader2.Models
 
         [Required]
         public string Url { get; set; } = string.Empty;
+
+        /// <summary>
+        /// このフィードが Ngワード を含んでいるかを表します。
+        /// </summary>
+        [Required]
+        public bool ContainsNgWord { get; set; }
+
+        /// <summary>
+        /// このフィードが Ngワード を含んでいるかを確認した日付です。
+        /// </summary>
+        [Required]
+        public DateTime LastValidationDate { get; set; }
 
         [Required]
         public bool IsRead { get => isRead; set => SetProperty(ref isRead, value); }
