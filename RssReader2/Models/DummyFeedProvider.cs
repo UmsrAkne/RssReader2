@@ -19,7 +19,7 @@ namespace RssReader2.Models
                         IsRead = false,
                         Id = 1 + i,
                         ParentSiteId = 0,
-                        DateTime = DateTime.Now.Add(TimeSpan.FromMinutes(i)),
+                        PublishedAt = DateTime.Now.Add(TimeSpan.FromMinutes(i)),
                         Description = $"article description no.{i}",
                         Title = $"article title no.{i}",
                         Url = $"https://dummyUrl/notExists/articleNumber_{i}",

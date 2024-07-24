@@ -15,8 +15,11 @@ namespace RssReader2.Models
         [Required]
         public int ParentSiteId { get; set; }
 
+        /// <summary>
+        /// このフィードの記事が公開された日時。
+        /// </summary>
         [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime PublishedAt { get; set; }
 
         [Required]
         public string Description { get; set; } = string.Empty;
