@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RssReader2.Models.Dbs
 {
@@ -27,9 +28,35 @@ namespace RssReader2.Models.Dbs
             feedRepository.Add(feed);
         }
 
-        public void AddFeeds(IEnumerable<Feed> feeds)
+        /// <summary>
+        /// フィードを追加します。
+        /// 既存のフィードと一致するフィードはフィルタリングされ、新たに追加されるフィードのリストのみをフィードリポジトリに追加します。
+        /// 各フィードのタイトルと説明が含まれているNGワードのリストに対して確認され、NGワードが含まれている場合、フィードのContainsNgWordプロパティが設定されます。
+        /// 最終的に、フィードの最終検証日が現在の日時に設定されます。
+        /// </summary>
+        /// <param name="feeds">追加したいフィードのコレクションです。</param>
+        /// <param name="ngWords">フィードのタイトルまたは説明に含まれていないことを確認したいNGワードのコレクションです。</param>
+        public void AddFeeds(IEnumerable<Feed> feeds, IEnumerable<NgWord> ngWords)
         {
-            feedRepository.AddRange(feeds);
+            var ngWordList = ngWords.ToList();
+            var all = feedRepository.GetAll();
+
+            var filteredFeeds =
+                feeds.Where(f => !all
+                    .Where(a => a.ParentSiteId == f.ParentSiteId)
+                    .Any(a => a.AreEqual(f)))
+                .ToList();
+
+            foreach (var feed in filteredFeeds)
+            {
+                feed.ContainsNgWord =
+                    ngWordList.Any(ngWord => feed.Title.Contains(ngWord.Word)) ||
+                    ngWordList.Any(ngWord => feed.Description.Contains(ngWord.Word));
+
+                feed.LastValidationDate = DateTime.Now;
+            }
+
+            feedRepository.AddRange(filteredFeeds);
         }
 
         public void UpdateFeed(Feed feed)

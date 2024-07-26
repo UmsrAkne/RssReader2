@@ -44,5 +44,10 @@ namespace RssReader2.Models
 
         [Required]
         public bool IsRead { get => isRead; set => SetProperty(ref isRead, value); }
+
+        public bool AreEqual(Feed another)
+        {
+            return Title == another.Title && Url == another.Url;
+        }
     }
 }
