@@ -59,6 +59,25 @@ namespace RssReader2.Models.Dbs
             feedRepository.AddRange(filteredFeeds);
         }
 
+        /// <summary>
+        /// 特定のWebSite IDに関連付けられているフィードを取得します。NGワードを含むフィードはフィルタされます。
+        /// </summary>
+        /// <param name="webSite">フィードを取得するWebSiteのインスタンス</param>
+        /// <param name="ngWords">フィードからフィルタリングするための、NGワードのコレクション</param>
+        /// <returns>NGワードを含まないフィードのコレクション</returns>
+        public IEnumerable<Feed> GetFeedsByWebSiteId(WebSite webSite, IEnumerable<NgWord> ngWords)
+        {
+            var ngWordList = ngWords.ToList();
+            var latestNgWordUpdated = ngWordList.Max(w => w.LastUpdated);
+            var allFeeds = GetAllFeeds()
+                .Where(f => f.ParentSiteId == webSite.Id).ToList();
+
+            var notValidation = allFeeds.Where(f => f.LastValidationDate < latestNgWordUpdated);
+            NgWordValidation(notValidation, ngWordList);
+
+            return allFeeds.Where(f => !f.ContainsNgWord);
+        }
+
         public void UpdateFeed(Feed feed)
         {
             feedRepository.Update(feed);
@@ -73,6 +92,20 @@ namespace RssReader2.Models.Dbs
             }
 
             feedRepository.Delete(id);
+        }
+
+        private void NgWordValidation(IEnumerable<Feed> feeds, IEnumerable<NgWord> ngWords)
+        {
+            var ngWordList = ngWords.ToList();
+
+            foreach (var feed in feeds)
+            {
+                feed.ContainsNgWord =
+                    ngWordList.Any(ngWord => feed.Title.Contains(ngWord.Word)) ||
+                    ngWordList.Any(ngWord => feed.Description.Contains(ngWord.Word));
+
+                feed.LastValidationDate = DateTime.Now;
+            }
         }
     }
 }
