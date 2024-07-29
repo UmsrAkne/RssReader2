@@ -55,5 +55,11 @@ namespace RssReader2.Models.Dbs
 
             context.SaveChanges();
         }
+
+        public void UpdateRange(IEnumerable<Feed> entities)
+        {
+            dbSet.UpdateRange(entities);
+            context.SaveChanges();
+        }
     }
 }

@@ -83,5 +83,53 @@ namespace RssReader2Test.Models.Dbs
             // IRepository.AddRange() が一度だけ呼び出されていることを確認します。
             feedRepositoryMock.Verify(x => x.AddRange(It.IsAny<IEnumerable<Feed>>()), Times.Once);
         }
+
+        [Test]
+        public void GetFeedsByWebSiteId_Returns_Feeds_Without_NgWords()
+        {
+            // Arrange
+            var ngWords = new List<NgWord>
+            {
+                new() { Word = "NG1", LastUpdated = DateTime.Now, },
+                new() { Word = "NG2", LastUpdated = DateTime.Now, },
+            };
+
+            var feeds = new List<Feed>
+            {
+                new()
+                {
+                    Id = 1, ParentSiteId = 1, ContainsNgWord = false,
+                    LastValidationDate = DateTime.Now.AddHours(1),
+                },
+                new()
+                {
+                    Id = 2, ParentSiteId = 1, ContainsNgWord = true,
+                    LastValidationDate = DateTime.Now.AddHours(-1),
+                },
+                new() // タイトルにNGワードが含まれる
+                {
+                    Id = 3, ParentSiteId = 1, ContainsNgWord = true,
+                    LastValidationDate = DateTime.Now.AddHours(-2),
+                    Title = "NG1",
+                },
+                new() // 別のサイトID
+                {
+                    Id = 4, ParentSiteId = 2, ContainsNgWord = true,
+                    LastValidationDate = DateTime.Now.AddHours(-2),
+                },
+            };
+
+            var webSite = new WebSite { Id = 1, Title = "Test WebSite", };
+            feedRepositoryMock.Setup(fr => fr.GetAll()).Returns(feeds.AsQueryable);
+            var feedService = new FeedService(feedRepositoryMock.Object);
+
+            // Act
+            var resultFeeds = feedService.GetFeedsByWebSiteId(webSite, ngWords).ToList();
+
+            // Assert
+            Assert.That(resultFeeds, Has.Exactly(2).Items, "結果のリストには2つのアイテムが入っているはず。");
+            Assert.That(resultFeeds, Has.None.Matches<Feed>(f => f.ContainsNgWord));
+            Assert.That(resultFeeds, Has.All.Property("ParentSiteId").EqualTo(webSite.Id));
+        }
     }
 }
