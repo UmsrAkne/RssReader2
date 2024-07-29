@@ -55,5 +55,10 @@ namespace RssReader2.Models.Dbs
 
             context.SaveChanges();
         }
+
+        public void UpdateRange(IEnumerable<NgWord> entities)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

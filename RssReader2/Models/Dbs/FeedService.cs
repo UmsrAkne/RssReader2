@@ -97,8 +97,9 @@ namespace RssReader2.Models.Dbs
         private void NgWordValidation(IEnumerable<Feed> feeds, IEnumerable<NgWord> ngWords)
         {
             var ngWordList = ngWords.ToList();
+            var feedList = feeds.ToList();
 
-            foreach (var feed in feeds)
+            foreach (var feed in feedList)
             {
                 feed.ContainsNgWord =
                     ngWordList.Any(ngWord => feed.Title.Contains(ngWord.Word)) ||
@@ -106,6 +107,8 @@ namespace RssReader2.Models.Dbs
 
                 feed.LastValidationDate = DateTime.Now;
             }
+
+            feedRepository.UpdateRange(feedList);
         }
     }
 }

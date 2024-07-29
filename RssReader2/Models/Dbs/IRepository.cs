@@ -17,5 +17,7 @@ namespace RssReader2.Models.Dbs
         void Update(T entity);
 
         void Delete(int id);
+
+        void UpdateRange(IEnumerable<T> entities);
     }
 }
