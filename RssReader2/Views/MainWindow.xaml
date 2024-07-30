@@ -31,6 +31,10 @@
             Grid.Column="0"
             Grid.ColumnSpan="2">
             <MenuItem Header="File" />
+            <MenuItem Header="View">
+                <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する" />
+            </MenuItem>
+
         </Menu>
 
         <TreeView
