@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RssReader2.Models.Dbs
 {
@@ -22,9 +23,23 @@ namespace RssReader2.Models.Dbs
             return webSiteRepository.GetById(id);
         }
 
+        /// <summary>
+        /// AddWebSiteメソッドは、新しいWebサイトをシステムに追加します。
+        /// </summary>
+        /// <remarks>
+        /// Webサイトは、タイトルとURLが空でなく、URLが既存のWebサイトと重複しない場合に追加されます。
+        /// </remarks>
+        /// <param name="webSite">追加するWebSiteオブジェクト。</param>
         public void AddWebSite(WebSite webSite)
         {
-            webSiteRepository.Add(webSite);
+            var isEnabledItem =
+                !string.IsNullOrWhiteSpace(webSite.Title) && !string.IsNullOrWhiteSpace(webSite.Url);
+
+            var all = GetAllWebSites();
+            if (all.All(w => w.Url != webSite.Url) && isEnabledItem)
+            {
+                webSiteRepository.Add(webSite);
+            }
         }
 
         public void AddWebSites(IEnumerable<WebSite> webSites)

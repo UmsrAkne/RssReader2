@@ -12,7 +12,7 @@ namespace RssReader2.Models
     public static class FeedReader
     {
         /// <summary>
-        /// 指定した URL から Feed のリストを生成しあｍす。
+        /// 指定した URL から Feed のリストを生成します。
         /// </summary>
         /// <param name="url">読み込みたいURL。</param>
         /// <returns>読み込んだリストを取得します。読み込みに失敗した場合、空のリストを返します。</returns>
