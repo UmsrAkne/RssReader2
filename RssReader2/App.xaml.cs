@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using RssReader2.Models;
 using RssReader2.Models.Dbs;
+using RssReader2.ViewModels;
 using RssReader2.Views;
 
 namespace RssReader2
@@ -18,6 +19,8 @@ namespace RssReader2
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterDialog<WebSiteAdditionPage, WebSiteAdditionPageViewModel>();
+
             containerRegistry.RegisterSingleton<DatabaseContext>();
             containerRegistry.RegisterSingleton<IRepository<Feed>, FeedRepository>();
             containerRegistry.RegisterSingleton<IRepository<WebSite>, WebSiteRepository>();
