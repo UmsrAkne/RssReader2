@@ -44,6 +44,11 @@ namespace RssReader2.ViewModels
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
         });
 
+        public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(GroupAdditionPage), new DialogParameters(), (_) => { });
+        });
+
         private IFeedProvider FeedProvider { get; set; }
     }
 }

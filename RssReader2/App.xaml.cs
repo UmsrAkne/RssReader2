@@ -20,6 +20,7 @@ namespace RssReader2
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialog<WebSiteAdditionPage, WebSiteAdditionPageViewModel>();
+            containerRegistry.RegisterDialog<GroupAdditionPage, GroupAdditionPageViewModel>();
 
             containerRegistry.RegisterSingleton<DatabaseContext>();
             containerRegistry.RegisterSingleton<IRepository<Feed>, FeedRepository>();
