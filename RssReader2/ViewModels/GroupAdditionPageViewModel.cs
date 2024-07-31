@@ -32,6 +32,17 @@ namespace RssReader2.ViewModels
             set => SetProperty(ref webSiteGroups, value);
         }
 
+        public DelegateCommand AddWebSiteGroupCommand => new DelegateCommand(() =>
+        {
+            if (string.IsNullOrWhiteSpace(GroupName))
+            {
+                return;
+            }
+
+            webSiteGroupService.AddWebSiteGroup(new WebSiteGroup { Name = GroupName, });
+            WebSiteGroups = new ObservableCollection<WebSiteGroup>(webSiteGroupService.GetAllWebSiteGroups());
+        });
+
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
             RequestClose?.Invoke(new DialogResult());
