@@ -25,7 +25,15 @@
             <ListBox
                 MinHeight="80"
                 Margin="0,4"
-                ItemsSource="{Binding WebSiteGroups}" />
+                ItemsSource="{Binding WebSiteGroups}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:WebSiteGroup}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
 
         <StackPanel
