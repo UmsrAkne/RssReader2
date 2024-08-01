@@ -13,6 +13,7 @@ namespace RssReader2.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
+        private IWebSiteTreeViewItem selectedTreeViewItem;
 
         public MainWindowViewModel()
         {
@@ -39,9 +40,20 @@ namespace RssReader2.ViewModels
 
         public ObservableCollection<IWebSiteTreeViewItem> WebSiteTreeViewItems { get; set; } = new ();
 
+        public IWebSiteTreeViewItem SelectedTreeViewItem
+        {
+            get => selectedTreeViewItem;
+            set => SetProperty(ref selectedTreeViewItem, value);
+        }
+
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
+        });
+
+        public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(WebSiteEditPage), new DialogParameters(), (_) => { });
         });
 
         public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>
