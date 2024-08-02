@@ -13,12 +13,11 @@ namespace RssReader2.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
-        private IWebSiteTreeViewItem selectedTreeViewItem;
 
         public MainWindowViewModel()
         {
             Feeds = new ObservableCollection<Feed>(new DummyFeedProvider().GetAllFeeds());
-            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
+            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
         }
 
         public MainWindowViewModel(IContainerProvider containerProvider, IDialogService dialogService)
@@ -29,7 +28,7 @@ namespace RssReader2.ViewModels
             Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
-            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
+            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
         }
 
         public FeedService FeedService { get; set; }
@@ -38,13 +37,7 @@ namespace RssReader2.ViewModels
 
         public ObservableCollection<Feed> Feeds { get; set; }
 
-        public ObservableCollection<IWebSiteTreeViewItem> WebSiteTreeViewItems { get; set; } = new ();
-
-        public IWebSiteTreeViewItem SelectedTreeViewItem
-        {
-            get => selectedTreeViewItem;
-            set => SetProperty(ref selectedTreeViewItem, value);
-        }
+        public TreeViewVm TreeViewVm { get; private set; } = new ();
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
