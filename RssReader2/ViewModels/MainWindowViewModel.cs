@@ -52,6 +52,8 @@ namespace RssReader2.ViewModels
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
+            TreeViewVm.WebSiteTreeViewItems =
+                new ObservableCollection<IWebSiteTreeViewItem>(WebSiteService.GetAllWebSites());
         });
 
         public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
