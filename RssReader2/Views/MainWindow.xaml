@@ -15,7 +15,7 @@
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
-    <Grid>
+    <Grid IsEnabled="{Binding UiEnabled}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -28,18 +28,30 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Menu
+        <StackPanel
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2">
-            <MenuItem Header="File" />
-            <MenuItem Header="View">
-                <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する" />
-                <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
-                <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する" />
-            </MenuItem>
 
-        </Menu>
+            <Menu>
+                <MenuItem Header="File" />
+                <MenuItem Header="View">
+                    <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する" />
+                    <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
+                    <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する" />
+                </MenuItem>
+
+            </Menu>
+
+            <StatusBar>
+                <Button
+                    Margin="3"
+                    Padding="5,3"
+                    Command="{Binding GetRssFeedsCommandAsync}"
+                    Content="Update" />
+            </StatusBar>
+
+        </StackPanel>
 
         <TreeView
             Grid.Row="1"
