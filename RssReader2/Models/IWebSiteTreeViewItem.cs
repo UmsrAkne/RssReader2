@@ -7,5 +7,7 @@ namespace RssReader2.Models
         public string Name { get; }
 
         public IEnumerable<IWebSiteTreeViewItem> Children { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

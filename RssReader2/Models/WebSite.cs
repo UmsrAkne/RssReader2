@@ -6,6 +6,8 @@ namespace RssReader2.Models
 {
     public class WebSite : IWebSiteTreeViewItem
     {
+        private bool isSelected;
+
         [Key]
         [Required]
         public int Id { get; set; }
@@ -33,5 +35,8 @@ namespace RssReader2.Models
 
         [NotMapped]
         public IEnumerable<IWebSiteTreeViewItem> Children { get; set; } = new List<IWebSiteTreeViewItem>();
+
+        [NotMapped]
+        public bool IsSelected { get => isSelected; set => isSelected = value; }
     }
 }
