@@ -14,6 +14,7 @@ namespace RssReader2.ViewModels
     {
         private readonly IDialogService dialogService;
         private ObservableCollection<Feed> feeds;
+        private bool uiEnabled = true;
 
         public MainWindowViewModel()
         {
@@ -42,6 +43,8 @@ namespace RssReader2.ViewModels
         public ObservableCollection<Feed> Feeds { get => feeds; private set => SetProperty(ref feeds, value); }
 
         public TreeViewVm TreeViewVm { get; private set; } = new ();
+
+        public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
