@@ -46,11 +46,20 @@ namespace RssReader2.Models.Dbs
             var ngWordList = ngWords.ToList();
             var all = feedRepository.GetAll();
 
-            var filteredFeeds =
-                feeds.Where(f => !all
-                    .Where(a => a.ParentSiteId == f.ParentSiteId)
-                    .Any(a => a.AreEqual(f)))
-                .ToList();
+            var groupedAll =
+                all.GroupBy(a => a.ParentSiteId)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            var filteredFeeds = feeds.Where(f =>
+            {
+                if (!groupedAll.TryGetValue(f.ParentSiteId, out var relatedFeeds))
+                {
+                    // groupedAll の中に、対応するグループがない場合はフィルタに値を含める。
+                    return true;
+                }
+
+                return !relatedFeeds.Any(a => a.AreEqual(f));
+            }).ToList();
 
             foreach (var feed in filteredFeeds)
             {
