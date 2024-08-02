@@ -13,6 +13,7 @@ namespace RssReader2.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
+        private ObservableCollection<Feed> feeds;
 
         public MainWindowViewModel()
         {
@@ -38,7 +39,7 @@ namespace RssReader2.ViewModels
 
         public TextWrapper TitleBarText { get; } = new ();
 
-        public ObservableCollection<Feed> Feeds { get; set; }
+        public ObservableCollection<Feed> Feeds { get => feeds; private set => SetProperty(ref feeds, value); }
 
         public TreeViewVm TreeViewVm { get; private set; } = new ();
 
@@ -72,8 +73,12 @@ namespace RssReader2.ViewModels
 
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
         {
-            // Todo : For temporary code, delete before committing.
-            // ビヘイビアから呼び出されるコマンドの処理を書く。
+            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+
+            if (currentSite is WebSite site)
+            {
+                Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
+            }
         });
 
         private IFeedProvider FeedProvider { get; set; }
