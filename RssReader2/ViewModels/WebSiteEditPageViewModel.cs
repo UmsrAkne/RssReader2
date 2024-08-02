@@ -2,6 +2,7 @@ using System;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RssReader2.Models;
 
 namespace RssReader2.ViewModels
 {
@@ -19,6 +20,8 @@ namespace RssReader2.ViewModels
 
         public string SiteUrl { get => siteUrl; set => SetProperty(ref siteUrl, value); }
 
+        public WebSite WebSite { get; set; }
+
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
             RequestClose?.Invoke(new DialogResult());
@@ -28,10 +31,25 @@ namespace RssReader2.ViewModels
 
         public void OnDialogClosed()
         {
+            if (string.IsNullOrWhiteSpace(SiteName) || string.IsNullOrWhiteSpace(SiteUrl))
+            {
+                return;
+            }
+
+            WebSite.Title = SiteName;
+            WebSite.Url = SiteUrl;
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            if (!parameters.TryGetValue<WebSite>(nameof(WebSite), out var site))
+            {
+                return;
+            }
+
+            WebSite = site;
+            siteName = WebSite.Name;
+            siteUrl = WebSite.Url;
         }
     }
 }

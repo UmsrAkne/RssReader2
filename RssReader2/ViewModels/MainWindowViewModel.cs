@@ -25,6 +25,7 @@ namespace RssReader2.ViewModels
             this.dialogService = dialogService;
             FeedProvider = containerProvider.Resolve<IFeedProvider>();
             FeedService = containerProvider.Resolve<FeedService>();
+            WebSiteService = containerProvider.Resolve<WebSiteService>();
             Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
@@ -32,6 +33,8 @@ namespace RssReader2.ViewModels
         }
 
         public FeedService FeedService { get; set; }
+
+        public WebSiteService WebSiteService { get; set; }
 
         public TextWrapper TitleBarText { get; } = new ();
 
@@ -46,7 +49,20 @@ namespace RssReader2.ViewModels
 
         public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
         {
-            dialogService.ShowDialog(nameof(WebSiteEditPage), new DialogParameters(), (_) => { });
+            var currentItem = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+            if (currentItem is not WebSite)
+            {
+                return;
+            }
+
+            var param = new DialogParameters { { nameof(WebSite), currentItem }, };
+            dialogService.ShowDialog(nameof(WebSiteEditPage), param, (_) =>
+            {
+                if (currentItem is WebSite item)
+                {
+                    WebSiteService.UpdateWebSite(item);
+                }
+            });
         });
 
         public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>

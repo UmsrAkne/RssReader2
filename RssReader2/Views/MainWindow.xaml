@@ -33,7 +33,7 @@
             <MenuItem Header="File" />
             <MenuItem Header="View">
                 <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する" />
-                <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="ウェブサイトを編集する" />
+                <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
                 <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する" />
             </MenuItem>
 
