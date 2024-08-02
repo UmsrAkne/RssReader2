@@ -70,6 +70,12 @@ namespace RssReader2.ViewModels
             dialogService.ShowDialog(nameof(GroupAdditionPage), new DialogParameters(), (_) => { });
         });
 
+        public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
+        {
+            // Todo : For temporary code, delete before committing.
+            // ビヘイビアから呼び出されるコマンドの処理を書く。
+        });
+
         private IFeedProvider FeedProvider { get; set; }
     }
 }
