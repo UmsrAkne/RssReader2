@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Prism.Mvvm;
 
 namespace RssReader2.Models
 {
-    public class WebSite : IWebSiteTreeViewItem
+    public class WebSite : BindableBase, IWebSiteTreeViewItem
     {
         private bool isSelected;
 
@@ -37,6 +38,6 @@ namespace RssReader2.Models
         public IEnumerable<IWebSiteTreeViewItem> Children { get; set; } = new List<IWebSiteTreeViewItem>();
 
         [NotMapped]
-        public bool IsSelected { get => isSelected; set => isSelected = value; }
+        public bool IsSelected { get => isSelected; set => SetProperty(ref isSelected, value); }
     }
 }
