@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RssReader2.Models;
 using RssReader2.Models.Dbs;
+using RssReader2.ViewModels.Commands;
 using RssReader2.Views;
 
 namespace RssReader2.ViewModels
@@ -13,6 +16,8 @@ namespace RssReader2.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
+        private ObservableCollection<Feed> feeds;
+        private bool uiEnabled = true;
 
         public MainWindowViewModel()
         {
@@ -38,13 +43,17 @@ namespace RssReader2.ViewModels
 
         public TextWrapper TitleBarText { get; } = new ();
 
-        public ObservableCollection<Feed> Feeds { get; set; }
+        public ObservableCollection<Feed> Feeds { get => feeds; private set => SetProperty(ref feeds, value); }
 
         public TreeViewVm TreeViewVm { get; private set; } = new ();
+
+        public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
+            TreeViewVm.WebSiteTreeViewItems =
+                new ObservableCollection<IWebSiteTreeViewItem>(WebSiteService.GetAllWebSites());
         });
 
         public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
@@ -68,6 +77,39 @@ namespace RssReader2.ViewModels
         public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(GroupAdditionPage), new DialogParameters(), (_) => { });
+        });
+
+        public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
+        {
+            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+
+            if (currentSite is WebSite site)
+            {
+                Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
+            }
+        });
+
+        public AsyncDelegateCommand GetRssFeedsCommandAsync => new AsyncDelegateCommand(async () =>
+        {
+            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+            if (currentSite is not WebSite site)
+            {
+                // 選択中のアイテムが WebSite ではない場合は、UIを止めない。
+                return;
+            }
+
+            UiEnabled = false;
+
+            var l = await FeedReader.GetRssFeedsAsync(site.Url);
+            var list = l.ToList();
+            foreach (var f in list)
+            {
+                f.ParentSiteId = site.Id;
+            }
+
+            FeedService.AddFeeds(list, new List<NgWord>());
+            Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
+            UiEnabled = true;
         });
 
         private IFeedProvider FeedProvider { get; set; }
