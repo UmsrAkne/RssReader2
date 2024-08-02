@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RssReader2.Models;
 using RssReader2.Models.Dbs;
+using RssReader2.ViewModels.Commands;
 using RssReader2.Views;
 
 namespace RssReader2.ViewModels
@@ -82,6 +85,29 @@ namespace RssReader2.ViewModels
             {
                 Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
             }
+        });
+
+        public AsyncDelegateCommand GetRssFeedsCommandAsync => new AsyncDelegateCommand(async () =>
+        {
+            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+            if (currentSite is not WebSite site)
+            {
+                // 選択中のアイテムが WebSite ではない場合は、UIを止めない。
+                return;
+            }
+
+            UiEnabled = false;
+
+            var l = await FeedReader.GetRssFeedsAsync(site.Url);
+            var list = l.ToList();
+            foreach (var f in list)
+            {
+                f.ParentSiteId = site.Id;
+            }
+
+            FeedService.AddFeeds(list, new List<NgWord>());
+            Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
+            UiEnabled = true;
         });
 
         private IFeedProvider FeedProvider { get; set; }
