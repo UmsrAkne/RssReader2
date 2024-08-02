@@ -17,7 +17,7 @@ namespace RssReader2.ViewModels
         public MainWindowViewModel()
         {
             Feeds = new ObservableCollection<Feed>(new DummyFeedProvider().GetAllFeeds());
-            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
+            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
         }
 
         public MainWindowViewModel(IContainerProvider containerProvider, IDialogService dialogService)
@@ -25,23 +25,44 @@ namespace RssReader2.ViewModels
             this.dialogService = dialogService;
             FeedProvider = containerProvider.Resolve<IFeedProvider>();
             FeedService = containerProvider.Resolve<FeedService>();
+            WebSiteService = containerProvider.Resolve<WebSiteService>();
             Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
-            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
+            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
         }
 
         public FeedService FeedService { get; set; }
+
+        public WebSiteService WebSiteService { get; set; }
 
         public TextWrapper TitleBarText { get; } = new ();
 
         public ObservableCollection<Feed> Feeds { get; set; }
 
-        public ObservableCollection<IWebSiteTreeViewItem> WebSiteTreeViewItems { get; set; } = new ();
+        public TreeViewVm TreeViewVm { get; private set; } = new ();
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
+        });
+
+        public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
+        {
+            var currentItem = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+            if (currentItem is not WebSite)
+            {
+                return;
+            }
+
+            var param = new DialogParameters { { nameof(WebSite), currentItem }, };
+            dialogService.ShowDialog(nameof(WebSiteEditPage), param, (_) =>
+            {
+                if (currentItem is WebSite item)
+                {
+                    WebSiteService.UpdateWebSite(item);
+                }
+            });
         });
 
         public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>

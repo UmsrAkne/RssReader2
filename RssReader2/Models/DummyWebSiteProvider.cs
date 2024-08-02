@@ -12,6 +12,7 @@ namespace RssReader2.Models
                 Title = $"webSite name{i}",
                 Url = $"https://webSiteURL.{i}/",
                 Children = new List<IWebSiteTreeViewItem>(),
+                Id = i,
             });
         }
     }
