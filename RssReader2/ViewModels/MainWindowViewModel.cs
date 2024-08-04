@@ -112,6 +112,34 @@ namespace RssReader2.ViewModels
             UiEnabled = true;
         });
 
+        public AsyncDelegateCommand GetAllSiteRssFeedsCommandAsync => new AsyncDelegateCommand(async () =>
+        {
+            var all = WebSiteService.GetAllWebSites();
+
+            UiEnabled = false;
+
+            var list = new List<Feed>();
+            foreach (var site in all)
+            {
+                var l = await FeedReader.GetRssFeedsAsync(site.Url);
+                var ll = l.ToList();
+                foreach (var f in ll)
+                {
+                    f.ParentSiteId = site.Id;
+                }
+
+                list.AddRange(ll);
+            }
+
+            FeedService.AddFeeds(list, new List<NgWord>());
+            if (TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems) is WebSite currentSite)
+            {
+                Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(currentSite.Id));
+            }
+
+            UiEnabled = true;
+        });
+
         private IFeedProvider FeedProvider { get; set; }
     }
 }
