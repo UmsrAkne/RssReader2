@@ -43,14 +43,26 @@ namespace RssReader2.Models.Dbs
         /// <param name="ngWords">フィードのタイトルまたは説明に含まれていないことを確認したいNGワードのコレクションです。</param>
         public void AddFeeds(IEnumerable<Feed> feeds, IEnumerable<NgWord> ngWords)
         {
+            var feedList = feeds.ToList();
+
+            if (!feedList.Any())
+            {
+                return;
+            }
+
             var ngWordList = ngWords.ToList();
             var all = feedRepository.GetAll();
 
-            var groupedAll =
-                all.GroupBy(a => a.ParentSiteId)
+            // 追加されるフィードの中で一番古い投稿日時を取得しておく。
+            // all からこれよりも古いフィードを除外できる。
+            var oldestPublishDate = feedList.Min(f => f.PublishedAt);
+
+            var groupedAll = all
+                .Where(a => a.PublishedAt >= oldestPublishDate)
+                .GroupBy(a => a.ParentSiteId)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
-            var filteredFeeds = feeds.Where(f =>
+            var filteredFeeds = feedList.Where(f =>
             {
                 if (!groupedAll.TryGetValue(f.ParentSiteId, out var relatedFeeds))
                 {

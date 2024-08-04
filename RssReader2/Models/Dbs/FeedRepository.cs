@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace RssReader2.Models.Dbs
@@ -33,8 +34,9 @@ namespace RssReader2.Models.Dbs
 
         public void AddRange(IEnumerable<Feed> entities)
         {
-            dbSet.AddRange(entities);
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            context.BulkInsert(entities.ToList());
+            transaction.Commit();
         }
 
         public void Update(Feed entity)
