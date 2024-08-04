@@ -51,7 +51,7 @@ namespace RssReader2.Models
                     list = feed.Items.Select(f => new Feed
                     {
                         PublishedAt = f.PublishDate.DateTime,
-                        Description = f.Summary.Text,
+                        Description = f.Summary != null ? f.Summary.Text : string.Empty,
                         Title = f.Title.Text,
                         Url = f.Links.FirstOrDefault() != null ? f.Links.First().Uri.ToString() : string.Empty,
                     }).ToList();
