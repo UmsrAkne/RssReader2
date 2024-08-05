@@ -35,6 +35,7 @@ namespace RssReader2.ViewModels
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
             TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
+            FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
         }
 
         public FeedService FeedService { get; set; }
@@ -48,6 +49,8 @@ namespace RssReader2.ViewModels
         public TreeViewVm TreeViewVm { get; private set; } = new ();
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
+
+        public FeedListViewModel FeedListViewModel { get; set; }
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {

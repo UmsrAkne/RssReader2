@@ -33,6 +33,7 @@ namespace RssReader2
             containerRegistry.RegisterSingleton<WebSiteService>();
             containerRegistry.RegisterSingleton<WebSiteGroupService>();
             containerRegistry.RegisterSingleton<NgWordService>();
+            containerRegistry.RegisterSingleton<FeedListViewModel>();
 
             var d = Container.Resolve<DatabaseContext>();
             d.Database.EnsureCreated();
