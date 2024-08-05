@@ -7,5 +7,9 @@ namespace RssReader2.Models
         IEnumerable<Feed> GetAllFeeds();
 
         IEnumerable<Feed> GetFeedsByWebSiteId(int id);
+
+        IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber);
+
+        int GetFeedCountByWebSiteId(int id);
     }
 }
