@@ -13,7 +13,7 @@ namespace RssReader2.ViewModels
         private bool hasPrevPage;
         private int totalPageNumber;
         private int pageSize = 50;
-        private int pageNumber;
+        private int pageNumber = 1;
         private ObservableCollection<Feed> feeds;
         private WebSite webSite;
 
@@ -41,32 +41,32 @@ namespace RssReader2.ViewModels
             {
                 if (SetProperty(ref webSite, value))
                 {
-                    ReloadFeeds();
+                    ReloadFeeds(1);
                 }
             }
         }
 
-        public DelegateCommand ShowNextPageCommand => new DelegateCommand(() =>
+        public DelegateCommand NextPageCommand => new DelegateCommand(() =>
         {
-            Feeds = new ObservableCollection<Feed>(
-                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, ++PageNumber));
+            ReloadFeeds(++PageNumber);
         });
 
-        public DelegateCommand ShowPrevPageCommand => new DelegateCommand(() =>
+        public DelegateCommand PrevPageCommand => new DelegateCommand(() =>
         {
-            Feeds = new ObservableCollection<Feed>(
-                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, --PageNumber));
+            ReloadFeeds(--PageNumber);
         });
 
         private IFeedProvider FeedProvider { get; set; }
 
-        public void ReloadFeeds()
+        public void ReloadFeeds(int pageNum)
         {
             Feeds = new ObservableCollection<Feed>(
-                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, PageNumber));
+                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum));
 
             TotalPageNumber = (int)Math.Floor((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
-            PageNumber = 0;
+            PageNumber = pageNum;
+            HasNextPage = TotalPageNumber >= 2 && PageNumber < TotalPageNumber;
+            HasPrevPage = PageNumber > 1;
             RaisePropertyChanged(nameof(HasNextPage));
             RaisePropertyChanged(nameof(HasPrevPage));
         }

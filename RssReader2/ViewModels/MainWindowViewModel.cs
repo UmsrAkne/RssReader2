@@ -112,7 +112,7 @@ namespace RssReader2.ViewModels
             }
 
             FeedService.AddFeeds(list, new List<NgWord>());
-            FeedListViewModel.ReloadFeeds();
+            FeedListViewModel.ReloadFeeds(1);
             UiEnabled = true;
         });
 
@@ -138,7 +138,7 @@ namespace RssReader2.ViewModels
             FeedService.AddFeeds(list, new List<NgWord>());
             if (TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems) is WebSite)
             {
-                FeedListViewModel.ReloadFeeds();
+                FeedListViewModel.ReloadFeeds(1);
             }
 
             UiEnabled = true;
