@@ -85,7 +85,7 @@
         <ListView
             Grid.Row="1"
             Grid.Column="1"
-            ItemsSource="{Binding Feeds}">
+            ItemsSource="{Binding FeedListViewModel.Feeds}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Feed}">
                     <StackPanel Orientation="Horizontal">
