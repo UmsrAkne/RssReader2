@@ -16,12 +16,15 @@ namespace RssReader2.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
-        private ObservableCollection<Feed> feeds;
         private bool uiEnabled = true;
 
         public MainWindowViewModel()
         {
-            Feeds = new ObservableCollection<Feed>(new DummyFeedProvider().GetAllFeeds());
+            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider())
+            {
+                WebSite = new WebSite() { Id = 1, },
+            };
+
             TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
         }
 
@@ -31,10 +34,11 @@ namespace RssReader2.ViewModels
             FeedProvider = containerProvider.Resolve<IFeedProvider>();
             FeedService = containerProvider.Resolve<FeedService>();
             WebSiteService = containerProvider.Resolve<WebSiteService>();
-            Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
             TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
+            FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
+            FeedListViewModel.Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
         }
 
         public FeedService FeedService { get; set; }
@@ -43,11 +47,11 @@ namespace RssReader2.ViewModels
 
         public TextWrapper TitleBarText { get; } = new ();
 
-        public ObservableCollection<Feed> Feeds { get => feeds; private set => SetProperty(ref feeds, value); }
-
         public TreeViewVm TreeViewVm { get; private set; } = new ();
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
+
+        public FeedListViewModel FeedListViewModel { get; set; }
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
@@ -85,7 +89,7 @@ namespace RssReader2.ViewModels
 
             if (currentSite is WebSite site)
             {
-                Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
+                FeedListViewModel.WebSite = site;
             }
         });
 
@@ -108,7 +112,7 @@ namespace RssReader2.ViewModels
             }
 
             FeedService.AddFeeds(list, new List<NgWord>());
-            Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(site.Id));
+            FeedListViewModel.ReloadFeeds(1);
             UiEnabled = true;
         });
 
@@ -132,9 +136,9 @@ namespace RssReader2.ViewModels
             }
 
             FeedService.AddFeeds(list, new List<NgWord>());
-            if (TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems) is WebSite currentSite)
+            if (TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems) is WebSite)
             {
-                Feeds = new ObservableCollection<Feed>(FeedProvider.GetFeedsByWebSiteId(currentSite.Id));
+                FeedListViewModel.ReloadFeeds(1);
             }
 
             UiEnabled = true;

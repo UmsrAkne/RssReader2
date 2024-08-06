@@ -28,6 +28,30 @@ namespace RssReader2.Models
             return feeds.Where(f => f.ParentSiteId == id);
         }
 
+        public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber)
+        {
+            if (feeds.All(f => f.ParentSiteId != id))
+            {
+                AddDummies(id);
+            }
+
+            // データをページング
+            var items = feeds.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return items;
+        }
+
+        public int GetFeedCountByWebSiteId(int id)
+        {
+            return feeds.Count(f => f.ParentSiteId == id);
+        }
+
+        public void UpdateFeed(Feed feed)
+        {
+        }
+
         private void AddDummies(int siteId)
         {
             var list = new List<Feed>();
