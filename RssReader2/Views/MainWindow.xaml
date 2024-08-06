@@ -86,7 +86,12 @@
         <ListView
             Grid.Row="1"
             Grid.Column="1"
-            ItemsSource="{Binding FeedListViewModel.Feeds}">
+            ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}">
+
+            <i:Interaction.Behaviors>
+                <views:ResetScrollOnItemsSourceChangedBehavior />
+            </i:Interaction.Behaviors>
+
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Feed}">
                     <StackPanel Orientation="Horizontal">
