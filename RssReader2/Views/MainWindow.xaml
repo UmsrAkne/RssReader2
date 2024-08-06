@@ -87,6 +87,7 @@
             x:Name="FeedListView"
             Grid.Row="1"
             Grid.Column="1"
+            AlternationCount="2"
             ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}">
 
             <i:Interaction.Behaviors>
@@ -102,7 +103,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Feed}">
                     <StackPanel Orientation="Horizontal">
-                        <Border Padding="5,0" BorderThickness="5,0,0,0">
+                        <Border
+                            Margin="0,1"
+                            Padding="5,0"
+                            BorderThickness="5,0,0,0">
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Style.Triggers>
@@ -121,6 +125,16 @@
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="#EEEEEE" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
 
         <StatusBar
