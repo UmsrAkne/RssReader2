@@ -56,6 +56,15 @@ namespace RssReader2.ViewModels
             ReloadFeeds(--PageNumber);
         });
 
+        public DelegateCommand<Feed> UpdateIsReadPropertyCommand => new DelegateCommand<Feed>((param) =>
+        {
+            if (param is { IsRead: false, })
+            {
+                param.IsRead = true;
+                FeedProvider.UpdateFeed(param);
+            }
+        });
+
         private IFeedProvider FeedProvider { get; set; }
 
         public void ReloadFeeds(int pageNum)

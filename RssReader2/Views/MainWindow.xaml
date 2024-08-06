@@ -84,6 +84,7 @@
         </TreeView>
 
         <ListView
+            x:Name="FeedListView"
             Grid.Row="1"
             Grid.Column="1"
             ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}">
@@ -91,6 +92,12 @@
             <i:Interaction.Behaviors>
                 <views:ResetScrollOnItemsSourceChangedBehavior />
             </i:Interaction.Behaviors>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding FeedListViewModel.UpdateIsReadPropertyCommand}" CommandParameter="{Binding ElementName=FeedListView, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Feed}">

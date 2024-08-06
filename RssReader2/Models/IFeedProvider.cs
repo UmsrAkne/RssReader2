@@ -11,5 +11,7 @@ namespace RssReader2.Models
         IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber);
 
         int GetFeedCountByWebSiteId(int id);
+
+        void UpdateFeed(Feed feed);
     }
 }
