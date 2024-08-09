@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -13,6 +14,7 @@ namespace RssReader2.ViewModels
     {
         private readonly NgWordService ngWordService;
         private string ngWordText;
+        private Visibility listVisibility = Visibility.Hidden;
 
         public NgWordAdditionPageViewModel(NgWordService ngWordService)
         {
@@ -27,6 +29,12 @@ namespace RssReader2.ViewModels
 
         public ObservableCollection<NgWord> NgWords { get; set; }
 
+        public Visibility ListVisibility
+        {
+            get => listVisibility;
+            set => SetProperty(ref listVisibility, value);
+        }
+
         public DelegateCommand AddNgWordCommand => new DelegateCommand(() =>
         {
             if (string.IsNullOrWhiteSpace(NgWordText))
@@ -37,6 +45,11 @@ namespace RssReader2.ViewModels
             ngWordService.AddNgWord(new NgWord { Word = NgWordText, });
             NgWords = new ObservableCollection<NgWord>(ngWordService.GetAllNgWords());
             RaisePropertyChanged(nameof(NgWords));
+        });
+
+        public DelegateCommand ToggleListVisibilityCommand => new DelegateCommand(() =>
+        {
+            ListVisibility = ListVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         });
 
         public DelegateCommand CloseCommand => new (() =>
