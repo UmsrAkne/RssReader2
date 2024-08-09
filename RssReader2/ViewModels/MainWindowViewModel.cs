@@ -83,6 +83,11 @@ namespace RssReader2.ViewModels
             dialogService.ShowDialog(nameof(GroupAdditionPage), new DialogParameters(), (_) => { });
         });
 
+        public DelegateCommand ShowNgWordAdditionPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(NgWordAdditionPage), new DialogParameters(), (_) => { });
+        });
+
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
         {
             var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
