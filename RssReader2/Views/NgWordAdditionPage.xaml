@@ -1,0 +1,43 @@
+<Page
+    x:Class="RssReader2.Views.NgWordAdditionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RssReader2.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:RssReader2.ViewModels"
+    Title="NgWordAdditionPage"
+    Width="600"
+    d:DataContext="{d:DesignInstance viewModels:NgWordAdditionPageViewModel}"
+    mc:Ignorable="d">
+    <Grid Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <TextBlock Text="Word :" />
+            <Border Width="5" />
+            <TextBox DockPanel.Dock="Right" />
+        </DockPanel>
+
+        <ListBox Grid.Row="1" Margin="5,10" />
+
+        <StackPanel
+            Grid.Row="2"
+            Margin="0,5"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button Padding="5,0" Content="Add" />
+
+            <Button
+                Margin="5,0"
+                Padding="10,0"
+                Command="{Binding CloseCommand}"
+                Content="Close" />
+
+        </StackPanel>
+    </Grid>
+</Page>
