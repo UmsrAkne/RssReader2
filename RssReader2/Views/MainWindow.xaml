@@ -120,7 +120,23 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="{Binding Title}" />
+
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContainsNgWord}" Value="True">
+                                                <Setter Property="Text" Value="" />
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding ContainsNgWord}" Value="False">
+                                                <Setter Property="Text" Value="{Binding Title}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
                         </Border>
                     </StackPanel>
                 </DataTemplate>
