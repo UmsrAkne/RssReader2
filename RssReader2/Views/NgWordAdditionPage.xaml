@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:RssReader2.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:RssReader2.Models"
     xmlns:viewModels="clr-namespace:RssReader2.ViewModels"
     Title="NgWordAdditionPage"
     Width="600"
@@ -20,17 +21,31 @@
         <DockPanel Grid.Row="0">
             <TextBlock Text="Word :" />
             <Border Width="5" />
-            <TextBox DockPanel.Dock="Right" />
+            <TextBox DockPanel.Dock="Right" Text="{Binding NgWordText}" />
         </DockPanel>
 
-        <ListBox Grid.Row="1" Margin="5,10" />
+        <ListBox
+            Grid.Row="1"
+            Margin="5,10"
+            ItemsSource="{Binding NgWords}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:NgWord}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Word}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <StackPanel
             Grid.Row="2"
             Margin="0,5"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
-            <Button Padding="5,0" Content="Add" />
+            <Button
+                Padding="5,0"
+                Command="{Binding AddNgWordCommand}"
+                Content="Add" />
 
             <Button
                 Margin="5,0"
