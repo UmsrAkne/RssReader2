@@ -71,6 +71,9 @@ namespace RssReader2.Models
                     });
             }
 
+            list[2].ContainsNgWord = true;
+            list[3].ContainsNgWord = true;
+
             feeds = list;
         }
     }

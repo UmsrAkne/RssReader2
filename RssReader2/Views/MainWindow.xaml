@@ -10,7 +10,7 @@
     xmlns:viewModels="clr-namespace:RssReader2.ViewModels"
     xmlns:views="clr-namespace:RssReader2.Views"
     Title="{Binding TitleBarText.Title}"
-    Width="525"
+    Width="1024"
     Height="350"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="0.5*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -40,6 +40,7 @@
                     <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する" />
                     <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
                     <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する" />
+                    <MenuItem Command="{Binding ShowNgWordAdditionPageCommand}" Header="NGワードを追加する" />
                 </MenuItem>
 
             </Menu>
@@ -120,7 +121,23 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="{Binding Title}" />
+
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContainsNgWord}" Value="True">
+                                                <Setter Property="Text" Value="" />
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding ContainsNgWord}" Value="False">
+                                                <Setter Property="Text" Value="{Binding Title}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
                         </Border>
                     </StackPanel>
                 </DataTemplate>
