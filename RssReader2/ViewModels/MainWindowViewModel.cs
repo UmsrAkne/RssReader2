@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Prism.Commands;
@@ -20,7 +21,7 @@ namespace RssReader2.ViewModels
 
         public MainWindowViewModel()
         {
-            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider())
+            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider(), null)
             {
                 WebSite = new WebSite() { Id = 1, },
             };
@@ -34,12 +35,14 @@ namespace RssReader2.ViewModels
             FeedProvider = containerProvider.Resolve<IFeedProvider>();
             FeedService = containerProvider.Resolve<FeedService>();
             WebSiteService = containerProvider.Resolve<WebSiteService>();
+            NgWordService = containerProvider.Resolve<NgWordService>();
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
             TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
-            FeedListViewModel.Feeds = new ObservableCollection<Feed>(FeedProvider.GetAllFeeds());
         }
+
+        public NgWordService NgWordService { get; set; }
 
         public FeedService FeedService { get; set; }
 
@@ -85,7 +88,26 @@ namespace RssReader2.ViewModels
 
         public DelegateCommand ShowNgWordAdditionPageCommand => new DelegateCommand(() =>
         {
+            var all = NgWordService.GetAllNgWords().ToList();
+            var latestChangeDate = default(DateTime);
+            if (all.Count != 0)
+            {
+                latestChangeDate = all.Max(w => w.LastUpdated);
+            }
+
             dialogService.ShowDialog(nameof(NgWordAdditionPage), new DialogParameters(), (_) => { });
+            var allAfter = NgWordService.GetAllNgWords().ToList();
+            if (allAfter.Count == 0)
+            {
+                return;
+            }
+
+            {
+                if (latestChangeDate < allAfter.Max(w => w.LastUpdated))
+                {
+                    FeedListViewModel.ReloadFeeds(1);
+                }
+            }
         });
 
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>

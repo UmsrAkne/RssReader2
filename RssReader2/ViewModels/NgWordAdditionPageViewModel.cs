@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -15,6 +16,7 @@ namespace RssReader2.ViewModels
         private readonly NgWordService ngWordService;
         private string ngWordText;
         private Visibility listVisibility = Visibility.Hidden;
+        private ObservableCollection<NgWord> ngWords;
 
         public NgWordAdditionPageViewModel(NgWordService ngWordService)
         {
@@ -27,7 +29,7 @@ namespace RssReader2.ViewModels
 
         public string NgWordText { get => ngWordText; set => SetProperty(ref ngWordText, value); }
 
-        public ObservableCollection<NgWord> NgWords { get; set; }
+        public ObservableCollection<NgWord> NgWords { get => ngWords; set => SetProperty(ref ngWords, value); }
 
         public Visibility ListVisibility
         {
@@ -45,6 +47,17 @@ namespace RssReader2.ViewModels
             ngWordService.AddNgWord(new NgWord { Word = NgWordText, });
             NgWords = new ObservableCollection<NgWord>(ngWordService.GetAllNgWords());
             RaisePropertyChanged(nameof(NgWords));
+        });
+
+        public DelegateCommand<NgWord> DeleteNgWordCommand => new ((param) =>
+        {
+            if (param == null)
+            {
+                return;
+            }
+
+            ngWordService.DeleteNgWord(param.Id);
+            UpdateNgWords();
         });
 
         public DelegateCommand ToggleListVisibilityCommand => new DelegateCommand(() =>
@@ -65,8 +78,13 @@ namespace RssReader2.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            NgWords = new ObservableCollection<NgWord>(ngWordService.GetAllNgWords());
-            RaisePropertyChanged(nameof(NgWords));
+            UpdateNgWords();
+        }
+
+        private void UpdateNgWords()
+        {
+            NgWords = new ObservableCollection<NgWord>(
+                ngWordService.GetAllNgWords().Where(w => !w.IsDeleted));
         }
     }
 }

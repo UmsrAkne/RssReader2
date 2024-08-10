@@ -43,6 +43,29 @@ namespace RssReader2.Models
             return items;
         }
 
+        public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords)
+        {
+            if (feeds.All(f => f.ParentSiteId != id))
+            {
+                AddDummies(id);
+            }
+
+            // データをページング
+            var items = feeds.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var enumerable = ngWords.ToList();
+
+            foreach (var feed in items)
+            {
+                feed.ContainsNgWord =
+                    enumerable.Any(w => feed.Title.Contains(w.Word) || feed.Description.Contains(w.Word));
+            }
+
+            return items;
+        }
+
         public int GetFeedCountByWebSiteId(int id)
         {
             return feeds.Count(f => f.ParentSiteId == id);

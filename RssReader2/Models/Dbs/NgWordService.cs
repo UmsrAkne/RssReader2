@@ -61,7 +61,8 @@ namespace RssReader2.Models.Dbs
                 throw new ArgumentException("not found.");
             }
 
-            ngWordRepository.Delete(id);
+            ngWord.IsDeleted = true;
+            UpdateNgWord(ngWord);
         }
     }
 }

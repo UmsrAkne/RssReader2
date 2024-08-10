@@ -10,6 +10,8 @@ namespace RssReader2.Models
 
         IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber);
 
+        IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords);
+
         int GetFeedCountByWebSiteId(int id);
 
         void UpdateFeed(Feed feed);
