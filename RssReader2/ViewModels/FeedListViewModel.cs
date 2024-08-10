@@ -1,8 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Prism.Commands;
 using Prism.Mvvm;
 using RssReader2.Models;
+using RssReader2.Models.Dbs;
 
 namespace RssReader2.ViewModels
 {
@@ -17,9 +19,10 @@ namespace RssReader2.ViewModels
         private ObservableCollection<Feed> feeds;
         private WebSite webSite;
 
-        public FeedListViewModel(IFeedProvider feedProvider)
+        public FeedListViewModel(IFeedProvider feedProvider, NgWordService ngWordService)
         {
             FeedProvider = feedProvider;
+            NgWordService = ngWordService;
         }
 
         public ObservableCollection<Feed> Feeds { get => feeds; set => SetProperty(ref feeds, value); }
@@ -67,10 +70,13 @@ namespace RssReader2.ViewModels
 
         private IFeedProvider FeedProvider { get; set; }
 
+        private NgWordService NgWordService { get; set; }
+
         public void ReloadFeeds(int pageNum)
         {
+            var enabledNgWords = NgWordService.GetAllNgWords().Where(w => !w.IsDeleted);
             Feeds = new ObservableCollection<Feed>(
-                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum));
+                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
 
             TotalPageNumber = (int)Math.Floor((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
             PageNumber = pageNum;

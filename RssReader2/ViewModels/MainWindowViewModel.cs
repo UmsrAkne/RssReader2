@@ -21,7 +21,7 @@ namespace RssReader2.ViewModels
 
         public MainWindowViewModel()
         {
-            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider())
+            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider(), null)
             {
                 WebSite = new WebSite() { Id = 1, },
             };

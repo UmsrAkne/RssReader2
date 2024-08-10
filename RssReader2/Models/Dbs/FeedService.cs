@@ -31,6 +31,17 @@ namespace RssReader2.Models.Dbs
                 .ToList();
         }
 
+        public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords)
+        {
+            var l = GetFeedsByWebSiteId(id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            NgWordValidation(l, ngWords);
+            return l;
+        }
+
         public int GetFeedCountByWebSiteId(int id)
         {
             return feedRepository.GetAll().Count(f => f.ParentSiteId == id);
