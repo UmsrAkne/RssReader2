@@ -16,6 +16,12 @@ namespace RssReader2.Models
         [NotMapped]
         public int Index { get; set; }
 
+        /// <summary>
+        /// このレコードが削除済みかを表します。
+        /// </summary>
+        [NotMapped]
+        public bool IsDeleted { get; set; }
+
         [Required]
         public DateTime LastUpdated { get; set; }
     }
