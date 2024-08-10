@@ -34,6 +34,7 @@
             Content="リストを表示・非表示" />
 
         <ListBox
+            x:Name="ListBox"
             Grid.Row="2"
             MaxHeight="200"
             Margin="5,0,0,10"
@@ -57,6 +58,13 @@
                 Padding="5,0"
                 Command="{Binding AddNgWordCommand}"
                 Content="Add" />
+
+            <Button
+                Margin="10,0"
+                Padding="5,0"
+                Command="{Binding DeleteNgWordCommand}"
+                CommandParameter="{Binding SelectedItem, ElementName=ListBox}"
+                Content="Delete" />
 
             <Button
                 Margin="5,0"
