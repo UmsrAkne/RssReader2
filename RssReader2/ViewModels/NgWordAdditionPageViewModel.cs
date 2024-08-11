@@ -47,6 +47,7 @@ namespace RssReader2.ViewModels
             ngWordService.AddNgWord(new NgWord { Word = NgWordText, });
             NgWords = new ObservableCollection<NgWord>(ngWordService.GetAllNgWords());
             RaisePropertyChanged(nameof(NgWords));
+            NgWordText = string.Empty;
         });
 
         public DelegateCommand<NgWord> DeleteNgWordCommand => new ((param) =>
