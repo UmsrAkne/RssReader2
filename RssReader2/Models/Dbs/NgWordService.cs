@@ -33,6 +33,19 @@ namespace RssReader2.Models.Dbs
         /// </remarks>
         public void AddNgWord(NgWord ngWord)
         {
+            var deleted = GetAllNgWords()
+                .Where(w => w.IsDeleted)
+                .FirstOrDefault(w => w.Word == ngWord.Word);
+
+            if (deleted != null)
+            {
+                // ワードがDB追加済みで削除済みだった場合は、そのワードの削除フラグを外すことで追加とする。
+                deleted.LastUpdated = DateTime.Now;
+                deleted.IsDeleted = false;
+                UpdateNgWord(deleted);
+                return;
+            }
+
             var all = GetAllNgWords();
             if (all.Any(w => w.Word == ngWord.Word))
             {
