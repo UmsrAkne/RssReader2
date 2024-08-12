@@ -27,13 +27,13 @@ namespace RssReader2.ViewModels
             NgWordService = ngWordService;
         }
 
-        public ObservableCollection<Feed> Feeds { get => feeds; set => SetProperty(ref feeds, value); }
+        public ObservableCollection<Feed> Feeds { get => feeds; private set => SetProperty(ref feeds, value); }
 
-        public int PageNumber { get => pageNumber; set => SetProperty(ref pageNumber, value); }
+        public int PageNumber { get => pageNumber; private set => SetProperty(ref pageNumber, value); }
 
         public int PageSize { get => pageSize; set => SetProperty(ref pageSize, value); }
 
-        public int TotalPageNumber { get => totalPageNumber; set => SetProperty(ref totalPageNumber, value); }
+        public int TotalPageNumber { get => totalPageNumber; private set => SetProperty(ref totalPageNumber, value); }
 
         public bool HasNextPage { get => hasNextPage; set => SetProperty(ref hasNextPage, value); }
 
