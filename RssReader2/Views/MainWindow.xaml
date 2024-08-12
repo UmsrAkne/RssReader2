@@ -176,7 +176,7 @@
 
             <TextBlock Margin="10,0" Text="{Binding FeedListViewModel.PageNumber}" />
             <TextBlock Margin="2,0" Text="/" />
-            <TextBlock Margin="10,0" Text="{Binding FeedListViewModel.PageNumber}" />
+            <TextBlock Margin="10,0" Text="{Binding FeedListViewModel.TotalPageNumber}" />
 
             <Button
                 Padding="10,0"
