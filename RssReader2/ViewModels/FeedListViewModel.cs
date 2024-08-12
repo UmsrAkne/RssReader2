@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -18,6 +19,7 @@ namespace RssReader2.ViewModels
         private int pageNumber = 1;
         private ObservableCollection<Feed> feeds;
         private WebSite webSite;
+        private Feed selectedItem;
 
         public FeedListViewModel(IFeedProvider feedProvider, NgWordService ngWordService)
         {
@@ -25,17 +27,19 @@ namespace RssReader2.ViewModels
             NgWordService = ngWordService;
         }
 
-        public ObservableCollection<Feed> Feeds { get => feeds; set => SetProperty(ref feeds, value); }
+        public ObservableCollection<Feed> Feeds { get => feeds; private set => SetProperty(ref feeds, value); }
 
-        public int PageNumber { get => pageNumber; set => SetProperty(ref pageNumber, value); }
+        public int PageNumber { get => pageNumber; private set => SetProperty(ref pageNumber, value); }
 
         public int PageSize { get => pageSize; set => SetProperty(ref pageSize, value); }
 
-        public int TotalPageNumber { get => totalPageNumber; set => SetProperty(ref totalPageNumber, value); }
+        public int TotalPageNumber { get => totalPageNumber; private set => SetProperty(ref totalPageNumber, value); }
 
         public bool HasNextPage { get => hasNextPage; set => SetProperty(ref hasNextPage, value); }
 
         public bool HasPrevPage { get => hasPrevPage; set => SetProperty(ref hasPrevPage, value); }
+
+        public Feed SelectedItem { get => selectedItem; set => SetProperty(ref selectedItem, value); }
 
         public WebSite WebSite
         {
@@ -66,6 +70,22 @@ namespace RssReader2.ViewModels
                 param.IsRead = true;
                 FeedProvider.UpdateFeed(param);
             }
+        });
+
+        public DelegateCommand OpenUrlCommand => new DelegateCommand(() =>
+        {
+            if (SelectedItem == null || SelectedItem.ContainsNgWord)
+            {
+                return;
+            }
+
+            var pi = new ProcessStartInfo()
+            {
+                FileName = SelectedItem.Url,
+                UseShellExecute = true,
+            };
+
+            Process.Start(pi);
         });
 
         private IFeedProvider FeedProvider { get; set; }

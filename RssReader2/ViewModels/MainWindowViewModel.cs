@@ -42,12 +42,6 @@ namespace RssReader2.ViewModels
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
         }
 
-        public NgWordService NgWordService { get; set; }
-
-        public FeedService FeedService { get; set; }
-
-        public WebSiteService WebSiteService { get; set; }
-
         public TextWrapper TitleBarText { get; } = new ();
 
         public TreeViewVm TreeViewVm { get; private set; } = new ();
@@ -172,5 +166,11 @@ namespace RssReader2.ViewModels
         });
 
         private IFeedProvider FeedProvider { get; set; }
+
+        private NgWordService NgWordService { get; set; }
+
+        private FeedService FeedService { get; set; }
+
+        private WebSiteService WebSiteService { get; set; }
     }
 }
