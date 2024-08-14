@@ -22,6 +22,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -63,7 +64,7 @@
 
         <TreeView
             Grid.Row="1"
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="0"
             ItemsSource="{Binding TreeViewVm.WebSiteTreeViewItems}">
             <i:Interaction.Behaviors>
@@ -184,5 +185,28 @@
                 Content="-＞"
                 IsEnabled="{Binding FeedListViewModel.HasNextPage}" />
         </StatusBar>
+
+        <Border
+            Grid.Row="4"
+            Grid.Column="1"
+            BorderBrush="Gray"
+            BorderThickness="1">
+
+            <TextBlock MinHeight="40" Margin="3">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="True">
+                                <Setter Property="Text" Value="" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
+                                <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Border>
     </Grid>
 </Window>
