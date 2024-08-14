@@ -22,6 +22,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -63,17 +64,19 @@
 
         <TreeView
             Grid.Row="1"
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="0"
             ItemsSource="{Binding TreeViewVm.WebSiteTreeViewItems}">
             <i:Interaction.Behaviors>
                 <views:TreeViewSelectedItemBehavior />
             </i:Interaction.Behaviors>
+
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <TextBlock
                         Margin="2,0"
                         Padding="4,0"
+                        FontSize="{StaticResource BasicFontSize}"
                         Text="{Binding Name}" />
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
@@ -132,7 +135,7 @@
 
                                 <TextBlock>
                                     <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
+                                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ContainsNgWord}" Value="True">
                                                     <Setter Property="Text" Value="" />
@@ -184,5 +187,31 @@
                 Content="-＞"
                 IsEnabled="{Binding FeedListViewModel.HasNextPage}" />
         </StatusBar>
+
+        <Border
+            Grid.Row="4"
+            Grid.Column="1"
+            BorderBrush="Gray"
+            BorderThickness="1">
+
+            <TextBlock
+                MinHeight="40"
+                MaxHeight="200"
+                Margin="3">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="True">
+                                <Setter Property="Text" Value="" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
+                                <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Border>
     </Grid>
 </Window>

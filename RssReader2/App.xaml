@@ -2,6 +2,19 @@
     x:Class="RssReader2.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:prism="http://prismlibrary.com/">
-    <Application.Resources />
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <Application.Resources>
+        <system:Double x:Key="BasicFontSize">15</system:Double>
+        <Color x:Key="White">#FFFFFF</Color>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="{StaticResource BasicFontSize}" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="{StaticResource BasicFontSize}" />
+        </Style>
+
+    </Application.Resources>
 </prism:PrismApplication>
