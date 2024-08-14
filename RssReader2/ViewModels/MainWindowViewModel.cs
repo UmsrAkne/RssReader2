@@ -60,18 +60,32 @@ namespace RssReader2.ViewModels
         public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
         {
             var currentItem = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
-            if (currentItem is not WebSite)
+            if (currentItem is not WebSite site)
             {
                 return;
             }
 
-            var param = new DialogParameters { { nameof(WebSite), currentItem }, };
+            var old = new WebSite
+            {
+                Title = site.Title,
+                Url = site.Url,
+                GroupId = site.GroupId,
+            };
+
+            var param = new DialogParameters { { nameof(WebSite), site }, };
             dialogService.ShowDialog(nameof(WebSiteEditPage), param, (_) =>
             {
-                if (currentItem is WebSite item)
+                if (currentItem is not WebSite item)
                 {
-                    WebSiteService.UpdateWebSite(item);
+                    return;
                 }
+
+                if (old.Title == item.Title && old.Url == item.Url && old.GroupId == item.GroupId)
+                {
+                    return;
+                }
+
+                WebSiteService.UpdateWebSite(item);
             });
         });
 
