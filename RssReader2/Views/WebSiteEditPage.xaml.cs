@@ -1,8 +1,6 @@
-using System.Windows.Controls;
-
 namespace RssReader2.Views
 {
-    public partial class WebSiteEditPage : Page
+    public partial class WebSiteEditPage
     {
         public WebSiteEditPage()
         {
