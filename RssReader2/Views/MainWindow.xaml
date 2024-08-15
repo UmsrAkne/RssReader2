@@ -49,15 +49,17 @@
             <StatusBar>
                 <Button
                     Margin="3"
-                    Padding="5,3"
+                    Padding="8,3"
                     Command="{Binding GetAllSiteRssFeedsCommandAsync}"
-                    Content="Update (All)" />
+                    Content="Update (All)"
+                    Template="{StaticResource ButtonCustomTemplate}" />
 
                 <Button
                     Margin="3"
-                    Padding="5,3"
+                    Padding="8,3"
                     Command="{Binding GetRssFeedsCommandAsync}"
-                    Content="Update" />
+                    Content="Update"
+                    Template="{StaticResource ButtonCustomTemplate}" />
             </StatusBar>
 
         </StackPanel>
@@ -166,16 +168,19 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <StatusBar
+        <StackPanel
             Grid.Row="3"
             Grid.Column="1"
-            HorizontalAlignment="Center">
+            Margin="0,3"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
 
             <Button
                 Padding="10,0"
                 Command="{Binding FeedListViewModel.PrevPageCommand}"
                 Content="＜-"
-                IsEnabled="{Binding FeedListViewModel.HasPrevPage}" />
+                IsEnabled="{Binding FeedListViewModel.HasPrevPage}"
+                Template="{StaticResource ButtonCustomTemplate}" />
 
             <TextBlock Margin="10,0" Text="{Binding FeedListViewModel.PageNumber}" />
             <TextBlock Margin="2,0" Text="/" />
@@ -185,8 +190,9 @@
                 Padding="10,0"
                 Command="{Binding FeedListViewModel.NextPageCommand}"
                 Content="-＞"
-                IsEnabled="{Binding FeedListViewModel.HasNextPage}" />
-        </StatusBar>
+                IsEnabled="{Binding FeedListViewModel.HasNextPage}"
+                Template="{StaticResource ButtonCustomTemplate}" />
+        </StackPanel>
 
         <Border
             Grid.Row="4"
