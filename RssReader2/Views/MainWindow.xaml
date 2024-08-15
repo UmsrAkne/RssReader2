@@ -168,10 +168,12 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <StatusBar
+        <StackPanel
             Grid.Row="3"
             Grid.Column="1"
-            HorizontalAlignment="Center">
+            Margin="0,3"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
 
             <Button
                 Padding="10,0"
@@ -190,7 +192,7 @@
                 Content="-＞"
                 IsEnabled="{Binding FeedListViewModel.HasNextPage}"
                 Template="{StaticResource ButtonCustomTemplate}" />
-        </StatusBar>
+        </StackPanel>
 
         <Border
             Grid.Row="4"
