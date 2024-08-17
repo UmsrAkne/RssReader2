@@ -66,6 +66,11 @@ namespace RssReader2.ViewModels
             ReloadFeeds(--PageNumber);
         });
 
+        public DelegateCommand ReloadUnReadFeedsCommand => new DelegateCommand(() =>
+        {
+            ReloadFeeds(0);
+        });
+
         public DelegateCommand<Feed> UpdateIsReadPropertyCommand => new DelegateCommand<Feed>((param) =>
         {
             if (param is { IsRead: false, })
@@ -98,8 +103,14 @@ namespace RssReader2.ViewModels
         public void ReloadFeeds(int pageNum)
         {
             var enabledNgWords = NgWordService.GetAllNgWords().Where(w => !w.IsDeleted);
-            Feeds = new ObservableCollection<Feed>(
-                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
+            Feeds = new ObservableCollection<Feed>(ShowUnreadOnly
+                    ? FeedProvider.GetUnreadFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords)
+                    : FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
+
+            if (ShowUnreadOnly)
+            {
+                return;
+            }
 
             TotalPageNumber = (int)Math.Floor((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
             PageNumber = pageNum;

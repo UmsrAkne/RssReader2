@@ -42,6 +42,17 @@ namespace RssReader2.Models.Dbs
             return l;
         }
 
+        public IEnumerable<Feed> GetUnreadFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords)
+        {
+            var l = GetFeedsByWebSiteId(id)
+                .Where(f => !f.IsRead)
+                .Take(pageSize)
+                .ToList();
+
+            NgWordValidation(l, ngWords);
+            return l;
+        }
+
         public int GetFeedCountByWebSiteId(int id)
         {
             return feedRepository.GetAll().Count(f => f.ParentSiteId == id);
