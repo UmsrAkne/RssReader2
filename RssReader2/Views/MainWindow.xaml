@@ -42,8 +42,11 @@
                     <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
                     <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する" />
                     <MenuItem Command="{Binding ShowNgWordAdditionPageCommand}" Header="NGワードを追加する" />
+                    <MenuItem
+                        Header="未読のフィードのみ表示する"
+                        IsCheckable="True"
+                        IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
                 </MenuItem>
-
             </Menu>
 
             <StatusBar>

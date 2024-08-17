@@ -20,6 +20,7 @@ namespace RssReader2.ViewModels
         private ObservableCollection<Feed> feeds;
         private WebSite webSite;
         private Feed selectedItem;
+        private bool showUnreadOnly;
 
         public FeedListViewModel(IFeedProvider feedProvider, NgWordService ngWordService)
         {
@@ -38,6 +39,8 @@ namespace RssReader2.ViewModels
         public bool HasNextPage { get => hasNextPage; set => SetProperty(ref hasNextPage, value); }
 
         public bool HasPrevPage { get => hasPrevPage; set => SetProperty(ref hasPrevPage, value); }
+
+        public bool ShowUnreadOnly { get => showUnreadOnly; set => SetProperty(ref showUnreadOnly, value); }
 
         public Feed SelectedItem { get => selectedItem; set => SetProperty(ref selectedItem, value); }
 
