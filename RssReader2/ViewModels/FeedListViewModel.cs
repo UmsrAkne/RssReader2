@@ -102,6 +102,11 @@ namespace RssReader2.ViewModels
 
         public void ReloadFeeds(int pageNum)
         {
+            if (WebSite == null)
+            {
+                return;
+            }
+
             var enabledNgWords = NgWordService.GetAllNgWords().Where(w => !w.IsDeleted);
             Feeds = new ObservableCollection<Feed>(ShowUnreadOnly
                     ? FeedProvider.GetUnreadFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords)
