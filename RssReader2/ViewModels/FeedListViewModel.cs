@@ -20,6 +20,7 @@ namespace RssReader2.ViewModels
         private ObservableCollection<Feed> feeds;
         private WebSite webSite;
         private Feed selectedItem;
+        private bool showUnreadOnly;
 
         public FeedListViewModel(IFeedProvider feedProvider, NgWordService ngWordService)
         {
@@ -38,6 +39,8 @@ namespace RssReader2.ViewModels
         public bool HasNextPage { get => hasNextPage; set => SetProperty(ref hasNextPage, value); }
 
         public bool HasPrevPage { get => hasPrevPage; set => SetProperty(ref hasPrevPage, value); }
+
+        public bool ShowUnreadOnly { get => showUnreadOnly; set => SetProperty(ref showUnreadOnly, value); }
 
         public Feed SelectedItem { get => selectedItem; set => SetProperty(ref selectedItem, value); }
 
@@ -61,6 +64,11 @@ namespace RssReader2.ViewModels
         public DelegateCommand PrevPageCommand => new DelegateCommand(() =>
         {
             ReloadFeeds(--PageNumber);
+        });
+
+        public DelegateCommand ReloadUnReadFeedsCommand => new DelegateCommand(() =>
+        {
+            ReloadFeeds(0);
         });
 
         public DelegateCommand<Feed> UpdateIsReadPropertyCommand => new DelegateCommand<Feed>((param) =>
@@ -94,11 +102,22 @@ namespace RssReader2.ViewModels
 
         public void ReloadFeeds(int pageNum)
         {
-            var enabledNgWords = NgWordService.GetAllNgWords().Where(w => !w.IsDeleted);
-            Feeds = new ObservableCollection<Feed>(
-                FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
+            if (WebSite == null)
+            {
+                return;
+            }
 
-            TotalPageNumber = (int)Math.Floor((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
+            var enabledNgWords = NgWordService.GetAllNgWords().Where(w => !w.IsDeleted);
+            Feeds = new ObservableCollection<Feed>(ShowUnreadOnly
+                    ? FeedProvider.GetUnreadFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords)
+                    : FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
+
+            if (ShowUnreadOnly)
+            {
+                return;
+            }
+
+            TotalPageNumber = (int)Math.Ceiling((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
             PageNumber = pageNum;
             HasNextPage = TotalPageNumber >= 2 && PageNumber < TotalPageNumber;
             HasPrevPage = PageNumber > 1;
