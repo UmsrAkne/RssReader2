@@ -117,7 +117,7 @@ namespace RssReader2.ViewModels
                 return;
             }
 
-            TotalPageNumber = (int)Math.Floor((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
+            TotalPageNumber = (int)Math.Ceiling((double)FeedProvider.GetFeedCountByWebSiteId(WebSite.Id) / PageSize);
             PageNumber = pageNum;
             HasNextPage = TotalPageNumber >= 2 && PageNumber < TotalPageNumber;
             HasPrevPage = PageNumber > 1;
