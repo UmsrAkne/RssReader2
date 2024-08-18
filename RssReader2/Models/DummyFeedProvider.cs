@@ -18,16 +18,6 @@ namespace RssReader2.Models
             return feeds;
         }
 
-        public IEnumerable<Feed> GetFeedsByWebSiteId(int id)
-        {
-            if (feeds.All(f => f.ParentSiteId != id))
-            {
-                AddDummies(id);
-            }
-
-            return feeds.Where(f => f.ParentSiteId == id);
-        }
-
         public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber)
         {
             if (feeds.All(f => f.ParentSiteId != id))

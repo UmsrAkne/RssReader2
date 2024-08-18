@@ -32,7 +32,6 @@ namespace RssReader2.ViewModels
         public MainWindowViewModel(IContainerProvider containerProvider, IDialogService dialogService)
         {
             this.dialogService = dialogService;
-            FeedProvider = containerProvider.Resolve<IFeedProvider>();
             FeedService = containerProvider.Resolve<FeedService>();
             WebSiteService = containerProvider.Resolve<WebSiteService>();
             NgWordService = containerProvider.Resolve<NgWordService>();
@@ -178,8 +177,6 @@ namespace RssReader2.ViewModels
 
             UiEnabled = true;
         });
-
-        private IFeedProvider FeedProvider { get; set; }
 
         private NgWordService NgWordService { get; set; }
 
