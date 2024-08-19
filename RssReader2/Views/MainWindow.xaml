@@ -98,6 +98,7 @@
             x:Name="FeedListView"
             Grid.Row="1"
             Grid.Column="1"
+            HorizontalContentAlignment="Stretch"
             AlternationCount="2"
             ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}"
             SelectedItem="{Binding FeedListViewModel.SelectedItem}">
@@ -115,15 +116,20 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Feed}">
-                    <StackPanel Orientation="Horizontal">
+                    <ContentControl>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.FeedListViewModel.OpenUrlCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <ContentControl>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDoubleClick">
-                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.FeedListViewModel.OpenUrlCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
                             <Border
+                                Grid.Column="0"
                                 Margin="0,1"
                                 Padding="5,0"
                                 BorderThickness="5,0,0,0">
@@ -158,8 +164,10 @@
                                 </TextBlock>
 
                             </Border>
-                        </ContentControl>
-                    </StackPanel>
+
+                            <TextBlock Grid.Column="1" Text="{Binding PublishedAt, Converter={StaticResource DateTimeConverter}}" />
+                        </Grid>
+                    </ContentControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
 
