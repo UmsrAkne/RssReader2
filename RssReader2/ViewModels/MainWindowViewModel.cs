@@ -21,12 +21,21 @@ namespace RssReader2.ViewModels
 
         public MainWindowViewModel()
         {
-            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider(), null)
+            FeedListViewModel = new FeedListViewModel(new DummyFeedProvider(), null);
+
+            RaisePropertyChanged(nameof(FeedListViewModel));
+            FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
+            FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
+            FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
+            FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
+            FeedListViewModel.Feeds.AddRange(new DummyFeedProvider().GetAllFeeds());
+
+            TreeViewVm = new TreeViewVm
             {
-                WebSite = new WebSite() { Id = 1, },
+                WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites()),
             };
 
-            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites());
+            RaisePropertyChanged(nameof(TreeViewVm));
         }
 
         public MainWindowViewModel(IContainerProvider containerProvider, IDialogService dialogService)
