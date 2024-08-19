@@ -2,9 +2,11 @@
     x:Class="RssReader2.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:RssReader2.Views.Converters"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
+        <converters:DateTimeConverter x:Key="DateTimeConverter" />
         <system:Double x:Key="BasicFontSize">15</system:Double>
         <Color x:Key="White">#FFFFFF</Color>
 

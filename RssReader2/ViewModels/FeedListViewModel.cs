@@ -17,7 +17,7 @@ namespace RssReader2.ViewModels
         private int totalPageNumber;
         private int pageSize = 50;
         private int pageNumber = 1;
-        private ObservableCollection<Feed> feeds;
+        private ObservableCollection<Feed> feeds = new ();
         private WebSite webSite;
         private Feed selectedItem;
         private bool showUnreadOnly;
