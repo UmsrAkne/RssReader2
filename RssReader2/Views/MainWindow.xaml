@@ -101,6 +101,7 @@
             HorizontalContentAlignment="Stretch"
             AlternationCount="2"
             ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             SelectedItem="{Binding FeedListViewModel.SelectedItem}">
 
             <i:Interaction.Behaviors>
