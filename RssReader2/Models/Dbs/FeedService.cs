@@ -18,7 +18,7 @@ namespace RssReader2.Models.Dbs
             return feedRepository.GetAll();
         }
 
-        public IEnumerable<Feed> GetFeedsByWebSiteId(int id)
+        public IQueryable<Feed> GetFeedsByWebSiteId(int id)
         {
             return feedRepository.GetAll().Where(f => f.ParentSiteId == id);
         }
