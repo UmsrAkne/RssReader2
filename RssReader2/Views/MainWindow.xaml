@@ -12,8 +12,9 @@
     xmlns:views="clr-namespace:RssReader2.Views"
     Title="{Binding TitleBarText.Title}"
     Width="1024"
-    Height="350"
+    Height="768"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+    d:DesignHeight="300"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <Grid IsEnabled="{Binding UiEnabled}">
