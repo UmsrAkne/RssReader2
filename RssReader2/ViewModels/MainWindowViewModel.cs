@@ -30,7 +30,7 @@ namespace RssReader2.ViewModels
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.AddRange(new DummyFeedProvider().GetAllFeeds());
 
-            TreeViewVm = new TreeViewVm
+            TreeViewVm = new TreeViewVm(null, null)
             {
                 WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites()),
             };
@@ -45,22 +45,15 @@ namespace RssReader2.ViewModels
             WebSiteService = containerProvider.Resolve<WebSiteService>();
             NgWordService = containerProvider.Resolve<NgWordService>();
 
-            var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
-            var sites = webSiteProvider
-                .GetAllWebSites()
-                .Cast<IWebSiteTreeViewItem>();
+            TreeViewVm = containerProvider.Resolve<TreeViewVm>();
+            TreeViewVm.ReloadTreeViewItems();
 
-            var groups = containerProvider.Resolve<WebSiteGroupService>()
-                .GetAllWebSiteGroups()
-                .Cast<IWebSiteTreeViewItem>();
-
-            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(groups.Concat(sites));
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
         }
 
         public TextWrapper TitleBarText { get; } = new ();
 
-        public TreeViewVm TreeViewVm { get; private init; } = new ();
+        public TreeViewVm TreeViewVm { get; private init; }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 

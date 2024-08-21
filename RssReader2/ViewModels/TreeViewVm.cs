@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Prism.Mvvm;
 using RssReader2.Models;
+using RssReader2.Models.Dbs;
 
 namespace RssReader2.ViewModels
 {
@@ -10,11 +12,21 @@ namespace RssReader2.ViewModels
     {
         private ObservableCollection<IWebSiteTreeViewItem> webSiteTreeViewItems;
 
+        public TreeViewVm(IWebSiteProvider webSiteProvider, WebSiteGroupService webSiteGroupService)
+        {
+            WebSiteProvider = webSiteProvider;
+            WebSiteGroupService = webSiteGroupService;
+        }
+
         public ObservableCollection<IWebSiteTreeViewItem> WebSiteTreeViewItems
         {
             get => webSiteTreeViewItems;
             set => SetProperty(ref webSiteTreeViewItems, value);
         }
+
+        private IWebSiteProvider WebSiteProvider { get; set; }
+
+        private WebSiteGroupService WebSiteGroupService { get; set; }
 
         /// <summary>
         /// 指定された IEnumerable <paramref name="items"/> コレクションから選択された項目を見つけます。
@@ -51,5 +63,21 @@ namespace RssReader2.ViewModels
 
              return selectedItem;
          }
+
+        /// <summary>
+        /// 全てのウェブサイト・ウェブサイトグループを取得し、ツリービューを更新します。
+        /// </summary>
+        public void ReloadTreeViewItems()
+        {
+            var sites = WebSiteProvider
+                .GetAllWebSites()
+                .Cast<IWebSiteTreeViewItem>();
+
+            var groups = WebSiteGroupService
+                .GetAllWebSiteGroups()
+                .Cast<IWebSiteTreeViewItem>();
+
+            WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(groups.Concat(sites));
+        }
     }
 }
