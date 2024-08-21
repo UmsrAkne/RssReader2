@@ -13,6 +13,7 @@ namespace RssReader2.ViewModels
     {
         private readonly WebSiteGroupService webSiteGroupService;
         private ObservableCollection<WebSiteGroup> webSiteGroups;
+        private string groupName;
 
         public GroupAdditionPageViewModel(WebSiteGroupService webSiteGroupService)
         {
@@ -24,7 +25,7 @@ namespace RssReader2.ViewModels
 
         public string Title => string.Empty;
 
-        public string GroupName { get; set; }
+        public string GroupName { get => groupName; set => SetProperty(ref groupName, value); }
 
         public ObservableCollection<WebSiteGroup> WebSiteGroups
         {
@@ -41,6 +42,7 @@ namespace RssReader2.ViewModels
 
             webSiteGroupService.AddWebSiteGroup(new WebSiteGroup { Name = GroupName, });
             WebSiteGroups = new ObservableCollection<WebSiteGroup>(webSiteGroupService.GetAllWebSiteGroups());
+            GroupName = string.Empty;
         });
 
         public DelegateCommand CloseCommand => new DelegateCommand(() =>

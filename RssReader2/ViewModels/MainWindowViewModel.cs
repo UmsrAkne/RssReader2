@@ -30,7 +30,7 @@ namespace RssReader2.ViewModels
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.AddRange(new DummyFeedProvider().GetAllFeeds());
 
-            TreeViewVm = new TreeViewVm
+            TreeViewVm = new TreeViewVm(null, null)
             {
                 WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites()),
             };
@@ -45,24 +45,24 @@ namespace RssReader2.ViewModels
             WebSiteService = containerProvider.Resolve<WebSiteService>();
             NgWordService = containerProvider.Resolve<NgWordService>();
 
-            var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
-            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
+            TreeViewVm = containerProvider.Resolve<TreeViewVm>();
+            TreeViewVm.ReloadTreeViewItems();
+
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
         }
 
         public TextWrapper TitleBarText { get; } = new ();
 
-        public TreeViewVm TreeViewVm { get; private set; } = new ();
+        public TreeViewVm TreeViewVm { get; private init; }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
-        public FeedListViewModel FeedListViewModel { get; set; }
+        public FeedListViewModel FeedListViewModel { get; init; }
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
-            TreeViewVm.WebSiteTreeViewItems =
-                new ObservableCollection<IWebSiteTreeViewItem>(WebSiteService.GetAllWebSites());
+            TreeViewVm.ReloadTreeViewItems();
         });
 
         public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
@@ -95,11 +95,14 @@ namespace RssReader2.ViewModels
 
                 WebSiteService.UpdateWebSite(item);
             });
+
+            TreeViewVm.ReloadTreeViewItems();
         });
 
         public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(GroupAdditionPage), new DialogParameters(), (_) => { });
+            TreeViewVm.ReloadTreeViewItems();
         });
 
         public DelegateCommand ShowNgWordAdditionPageCommand => new DelegateCommand(() =>
