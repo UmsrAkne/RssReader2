@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RssReader2.Models
 {
-    public class WebSiteGroup
+    public class WebSiteGroup : IWebSiteTreeViewItem
     {
         [Key]
         [Required]
@@ -13,5 +15,11 @@ namespace RssReader2.Models
         /// </summary>
         [Required]
         public string Name { get; set; } = string.Empty;
+
+        [NotMapped]
+        public IEnumerable<IWebSiteTreeViewItem> Children { get; set; } = new List<IWebSiteTreeViewItem>();
+
+        [NotMapped]
+        public bool IsSelected { get; set; }
     }
 }
