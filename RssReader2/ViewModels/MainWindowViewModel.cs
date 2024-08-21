@@ -52,11 +52,11 @@ namespace RssReader2.ViewModels
 
         public TextWrapper TitleBarText { get; } = new ();
 
-        public TreeViewVm TreeViewVm { get; private set; } = new ();
+        public TreeViewVm TreeViewVm { get; private init; } = new ();
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
-        public FeedListViewModel FeedListViewModel { get; set; }
+        public FeedListViewModel FeedListViewModel { get; init; }
 
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {

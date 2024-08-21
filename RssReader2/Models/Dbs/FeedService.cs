@@ -23,14 +23,6 @@ namespace RssReader2.Models.Dbs
             return feedRepository.GetAll().Where(f => f.ParentSiteId == id);
         }
 
-        public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber)
-        {
-            return GetFeedsByWebSiteId(id)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-        }
-
         public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords)
         {
             var l = GetFeedsByWebSiteId(id)

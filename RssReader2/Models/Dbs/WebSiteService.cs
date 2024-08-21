@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace RssReader2.Models.Dbs
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
+    // DI で注入するため、生成されない。
     public class WebSiteService : IWebSiteProvider
     {
         private readonly IRepository<WebSite> webSiteRepository;

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RssReader2.Models.Dbs
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class FeedRepository : IRepository<Feed>
     {
         private readonly DatabaseContext context;
