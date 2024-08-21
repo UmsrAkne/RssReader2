@@ -46,7 +46,15 @@ namespace RssReader2.ViewModels
             NgWordService = containerProvider.Resolve<NgWordService>();
 
             var webSiteProvider = containerProvider.Resolve<IWebSiteProvider>();
-            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(webSiteProvider.GetAllWebSites());
+            var sites = webSiteProvider
+                .GetAllWebSites()
+                .Cast<IWebSiteTreeViewItem>();
+
+            var groups = containerProvider.Resolve<WebSiteGroupService>()
+                .GetAllWebSiteGroups()
+                .Cast<IWebSiteTreeViewItem>();
+
+            TreeViewVm.WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(groups.Concat(sites));
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
         }
 
