@@ -34,6 +34,7 @@ namespace RssReader2.Models.Dbs
         public IEnumerable<Feed> GetFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords)
         {
             var l = GetFeedsByWebSiteId(id)
+                .OrderByDescending(f => f.PublishedAt)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -45,6 +46,7 @@ namespace RssReader2.Models.Dbs
         public IEnumerable<Feed> GetUnreadFeedsByWebSiteId(int id, int pageSize, int pageNumber, IEnumerable<NgWord> ngWords)
         {
             var l = GetFeedsByWebSiteId(id)
+                .OrderByDescending(f => f.PublishedAt)
                 .Where(f => !f.IsRead)
                 .Take(pageSize)
                 .ToList();
