@@ -12,11 +12,11 @@
     <Grid Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Width="80" Text="group Name : " />
+        <DockPanel Grid.Row="0">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock Margin="4,0" Text="Group Name : " />
                 <Border Margin="5,0" />
                 <TextBox Width="700" Text="{Binding GroupName, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
@@ -33,7 +33,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+        </DockPanel>
 
         <StackPanel
             Grid.Row="1"
