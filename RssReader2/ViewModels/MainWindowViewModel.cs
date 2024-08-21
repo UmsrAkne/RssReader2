@@ -62,8 +62,7 @@ namespace RssReader2.ViewModels
         public DelegateCommand ShowWebSiteAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(WebSiteAdditionPage), new DialogParameters(), (_) => { });
-            TreeViewVm.WebSiteTreeViewItems =
-                new ObservableCollection<IWebSiteTreeViewItem>(WebSiteService.GetAllWebSites());
+            TreeViewVm.ReloadTreeViewItems();
         });
 
         public DelegateCommand ShowWebSiteEditPageCommand => new DelegateCommand(() =>
@@ -96,11 +95,14 @@ namespace RssReader2.ViewModels
 
                 WebSiteService.UpdateWebSite(item);
             });
+
+            TreeViewVm.ReloadTreeViewItems();
         });
 
         public DelegateCommand ShowGroupAdditionPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(GroupAdditionPage), new DialogParameters(), (_) => { });
+            TreeViewVm.ReloadTreeViewItems();
         });
 
         public DelegateCommand ShowNgWordAdditionPageCommand => new DelegateCommand(() =>
