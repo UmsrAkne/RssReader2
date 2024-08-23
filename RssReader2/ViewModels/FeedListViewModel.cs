@@ -100,6 +100,17 @@ namespace RssReader2.ViewModels
 
         private NgWordService NgWordService { get; set; }
 
+        public void RevertToUnread()
+        {
+            if (SelectedItem is not { IsRead: true, })
+            {
+                return;
+            }
+
+            SelectedItem.IsRead = false;
+            FeedProvider.UpdateFeed(SelectedItem);
+        }
+
         public void ReloadFeeds(int pageNum)
         {
             if (WebSite == null)

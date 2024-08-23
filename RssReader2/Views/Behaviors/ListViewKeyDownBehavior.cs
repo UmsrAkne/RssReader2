@@ -1,6 +1,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
+using RssReader2.ViewModels;
 
 namespace RssReader2.Views.Behaviors
 {
@@ -40,6 +41,12 @@ namespace RssReader2.Views.Behaviors
                         lv.SelectedIndex--;
                     }
 
+                    break;
+
+                case Key.U:
+                    var dt = lv.DataContext;
+                    var vm = dt as MainWindowViewModel;
+                    vm?.FeedListViewModel.RevertToUnread();
                     break;
             }
 
