@@ -17,6 +17,19 @@
     d:DesignHeight="300"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="N"
+            Command="{Binding ShowWebSiteAdditionPageCommand}"
+            Modifiers="Control" />
+
+        <KeyBinding
+            Key="N"
+            Command="{Binding ShowGroupAdditionPageCommand}"
+            Modifiers="Control+Shift" />
+
+    </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
 
         <Grid.RowDefinitions>
@@ -40,9 +53,9 @@
             <Menu>
                 <MenuItem Header="File" />
                 <MenuItem Header="View">
-                    <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する" />
+                    <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する (Ctrl + N)" />
                     <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
-                    <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する" />
+                    <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する (Ctrl + Shift + N)" />
                     <MenuItem Command="{Binding ShowNgWordAdditionPageCommand}" Header="NGワードを追加する" />
                     <MenuItem
                         Command="{Binding FeedListViewModel.ReloadUnReadFeedsCommand}"
