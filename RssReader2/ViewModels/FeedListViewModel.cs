@@ -111,6 +111,17 @@ namespace RssReader2.ViewModels
             FeedProvider.UpdateFeed(SelectedItem);
         }
 
+        public void ToggleMark()
+        {
+            if (SelectedItem is not { IsRead: true, })
+            {
+                return;
+            }
+
+            SelectedItem.IsMarked = !SelectedItem.IsMarked;
+            FeedProvider.UpdateFeed(SelectedItem);
+        }
+
         public void ReloadFeeds(int pageNum)
         {
             if (WebSite == null)

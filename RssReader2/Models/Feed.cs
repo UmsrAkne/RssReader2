@@ -7,6 +7,7 @@ namespace RssReader2.Models
     public class Feed : BindableBase
     {
         private bool isRead;
+        private bool isMarked;
 
         [Key]
         [Required]
@@ -29,6 +30,9 @@ namespace RssReader2.Models
 
         [Required]
         public string Url { get; set; } = string.Empty;
+
+        [Required]
+        public bool IsMarked { get => isMarked; set => SetProperty(ref isMarked, value); }
 
         /// <summary>
         /// このフィードが Ngワード を含んでいるかを表します。
