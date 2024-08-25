@@ -26,6 +26,9 @@ namespace RssReader2.Views.Behaviors
                 return;
             }
 
+            var dt = lv.DataContext;
+            MainWindowViewModel vm;
+
             switch (e.Key)
             {
                 case Key.J:
@@ -44,9 +47,13 @@ namespace RssReader2.Views.Behaviors
                     break;
 
                 case Key.U:
-                    var dt = lv.DataContext;
-                    var vm = dt as MainWindowViewModel;
+                    vm = dt as MainWindowViewModel;
                     vm?.FeedListViewModel.RevertToUnread();
+                    break;
+
+                case Key.M:
+                    vm = dt as MainWindowViewModel;
+                    vm?.FeedListViewModel.ToggleMark();
                     break;
             }
 
