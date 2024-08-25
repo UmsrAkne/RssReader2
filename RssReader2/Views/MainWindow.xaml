@@ -162,21 +162,44 @@
                                     </Style>
                                 </Border.Style>
 
-                                <TextBlock>
-                                    <TextBlock.Style>
-                                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ContainsNgWord}" Value="True">
-                                                    <Setter Property="Text" Value="" />
-                                                </DataTrigger>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="0,0,4,0"
+                                        VerticalAlignment="Center"
+                                        Text="★">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsMarked}" Value="True">
+                                                        <Setter Property="Opacity" Value="1.0" />
+                                                        <Setter Property="Foreground" Value="Coral" />
+                                                    </DataTrigger>
 
-                                                <DataTrigger Binding="{Binding ContainsNgWord}" Value="False">
-                                                    <Setter Property="Text" Value="{Binding Title}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                                    <DataTrigger Binding="{Binding IsMarked}" Value="False">
+                                                        <Setter Property="Opacity" Value="0.1" />
+                                                        <Setter Property="Foreground" Value="Black" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ContainsNgWord}" Value="True">
+                                                        <Setter Property="Text" Value="" />
+                                                    </DataTrigger>
+
+                                                    <DataTrigger Binding="{Binding ContainsNgWord}" Value="False">
+                                                        <Setter Property="Text" Value="{Binding Title}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
 
                             </Border>
 

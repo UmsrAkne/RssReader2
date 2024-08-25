@@ -25,7 +25,7 @@ namespace RssReader2.ViewModels
 
             RaisePropertyChanged(nameof(FeedListViewModel));
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle_testTitle_testTitle_testTitle_testTitle_testTitle_testTitle_testTitle_testTitle_testTitle_testTitle_", });
-            FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
+            FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", IsMarked = true, });
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.AddRange(new DummyFeedProvider().GetAllFeeds());
