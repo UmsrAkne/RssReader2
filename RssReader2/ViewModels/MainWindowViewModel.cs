@@ -19,6 +19,7 @@ namespace RssReader2.ViewModels
         private readonly IDialogService dialogService;
         private bool uiEnabled = true;
 
+        [Obsolete("プレビュー用。ダミーを入力するためのコンストラクタです。明示的に呼び出さないでください。")]
         public MainWindowViewModel()
         {
             FeedListViewModel = new FeedListViewModel(new DummyFeedProvider(), null);
