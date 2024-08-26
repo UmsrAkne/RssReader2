@@ -30,6 +30,16 @@ namespace RssReader2.ViewModels
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.AddRange(new DummyFeedProvider().GetAllFeeds());
 
+            FeedListViewModel.Feeds[0].Description =
+                "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription";
+
+            FeedListViewModel.SelectedItem = FeedListViewModel.Feeds[0];
+
             TreeViewVm = new TreeViewVm(null, null)
             {
                 WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites()),

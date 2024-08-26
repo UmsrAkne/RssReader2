@@ -279,7 +279,8 @@
             <TextBlock
                 MinHeight="40"
                 MaxHeight="200"
-                Margin="3">
+                Margin="3"
+                TextWrapping="Wrap">
                 <TextBlock.Style>
                     <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
                         <Style.Triggers>
