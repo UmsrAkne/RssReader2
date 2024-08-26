@@ -15,7 +15,7 @@ namespace RssReader2.ViewModels
     {
         private readonly NgWordService ngWordService;
         private string ngWordText;
-        private Visibility listVisibility = Visibility.Hidden;
+        private Visibility listVisibility = Visibility.Collapsed;
         private ObservableCollection<NgWord> ngWords;
 
         public NgWordAdditionPageViewModel(NgWordService ngWordService)
