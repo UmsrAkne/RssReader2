@@ -41,7 +41,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.3*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -62,6 +62,9 @@
                         Header="未読のフィードのみ表示する"
                         IsCheckable="True"
                         IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
+                </MenuItem>
+                <MenuItem Header="Feeds">
+                    <MenuItem Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}" Header="NGワードを含む未読を既読にする" />
                 </MenuItem>
             </Menu>
 
@@ -279,7 +282,8 @@
             <TextBlock
                 MinHeight="40"
                 MaxHeight="200"
-                Margin="3">
+                Margin="3"
+                TextWrapping="Wrap">
                 <TextBlock.Style>
                     <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
                         <Style.Triggers>

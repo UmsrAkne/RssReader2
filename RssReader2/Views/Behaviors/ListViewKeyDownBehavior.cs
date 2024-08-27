@@ -46,6 +46,16 @@ namespace RssReader2.Views.Behaviors
 
                     break;
 
+                case Key.L:
+                    vm = dt as MainWindowViewModel;
+                    vm?.FeedListViewModel.NextPageCommand.Execute();
+                    break;
+
+                case Key.H:
+                    vm = dt as MainWindowViewModel;
+                    vm?.FeedListViewModel.PrevPageCommand.Execute();
+                    break;
+
                 case Key.U:
                     vm = dt as MainWindowViewModel;
                     vm?.FeedListViewModel.RevertToUnread();

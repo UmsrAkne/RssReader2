@@ -96,6 +96,17 @@ namespace RssReader2.ViewModels
             Process.Start(pi);
         });
 
+        public DelegateCommand MarkNgWordFeedsAsReadCommand => new DelegateCommand(() =>
+        {
+            if (WebSite == null)
+            {
+                return;
+            }
+
+            FeedProvider.MarkNgWordFeedsAsReadByWebSiteId(WebSite.Id);
+            ReloadFeeds(1);
+        });
+
         private IFeedProvider FeedProvider { get; set; }
 
         private NgWordService NgWordService { get; set; }

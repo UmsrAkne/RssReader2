@@ -149,6 +149,34 @@ namespace RssReader2.Models.Dbs
             feedRepository.Delete(id);
         }
 
+        /// <summary>
+        /// 入力されたサイトIDの中からNGワードを含むフィードを抽出し、既読にします。
+        /// </summary>
+        /// <param name="siteId">対象とするサイトID</param>
+        /// <remarks>
+        /// リポジトリからサイトIDで検索し、NGワードを含み、未読のフィードを抽出してそれをアップデートします。<br/>
+        /// このメソッドはデータの更新のみを実行します。NGワードのバリデーションが完了した後にコールしてください。
+        /// </remarks>
+        public void MarkNgWordFeedsAsReadByWebSiteId(int siteId)
+        {
+            var feeds = feedRepository.GetAll()
+                .Where(f => f.ParentSiteId == siteId)
+                .Where(f => f.ContainsNgWord)
+                .Where(f => !f.IsRead);
+
+            if (!feeds.Any())
+            {
+                return;
+            }
+
+            foreach (var feed in feeds)
+            {
+                feed.IsRead = true;
+            }
+
+            feedRepository.UpdateRange(feeds);
+        }
+
         private void NgWordValidation(IEnumerable<Feed> feeds, IEnumerable<NgWord> ngWords)
         {
             var ngWordList = ngWords.ToList();

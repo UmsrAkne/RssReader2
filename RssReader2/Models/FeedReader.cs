@@ -48,9 +48,11 @@ namespace RssReader2.Models
 
                 if (feed != null)
                 {
+                    var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+
                     list = feed.Items.Select(f => new Feed
                     {
-                        PublishedAt = f.PublishDate.DateTime,
+                        PublishedAt = TimeZoneInfo.ConvertTime(f.PublishDate.UtcDateTime, timeZoneInfo),
                         Description = f.Summary != null ? f.Summary.Text : string.Empty,
                         Title = f.Title.Text,
                         Url = f.Links.FirstOrDefault() != null ? f.Links.First().Uri.ToString() : string.Empty,

@@ -19,6 +19,7 @@ namespace RssReader2.ViewModels
         private readonly IDialogService dialogService;
         private bool uiEnabled = true;
 
+        [Obsolete("プレビュー用。ダミーを入力するためのコンストラクタです。明示的に呼び出さないでください。")]
         public MainWindowViewModel()
         {
             FeedListViewModel = new FeedListViewModel(new DummyFeedProvider(), null);
@@ -29,6 +30,16 @@ namespace RssReader2.ViewModels
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.Add(new Feed() { Title = "testTitle", });
             FeedListViewModel.Feeds.AddRange(new DummyFeedProvider().GetAllFeeds());
+
+            FeedListViewModel.Feeds[0].Description =
+                "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription"
+                + "DescriptionDescriptionDescriptionDescriptionDescription";
+
+            FeedListViewModel.SelectedItem = FeedListViewModel.Feeds[0];
 
             TreeViewVm = new TreeViewVm(null, null)
             {

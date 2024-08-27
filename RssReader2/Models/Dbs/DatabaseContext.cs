@@ -25,7 +25,14 @@ namespace RssReader2.Models.Dbs
             }
 
             var connectionString = new SqliteConnectionStringBuilder { DataSource = dbFileName, }.ToString();
+
             optionsBuilder.UseSqlite(new SqliteConnection(connectionString));
+
+            // フレームワークによって発行された SQL を確認するためのコード
+            // 上記の optionsBuilder.UseSqlite をコメントアウトして、代わりにこちらのコメントアウトを外して使います。
+            // optionsBuilder.UseSqlite(new SqliteConnection(connectionString))
+            //     .LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+            //     .EnableSensitiveDataLogging();
         }
     }
 }
