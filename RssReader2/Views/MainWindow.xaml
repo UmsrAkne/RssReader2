@@ -63,6 +63,9 @@
                         IsCheckable="True"
                         IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
                 </MenuItem>
+                <MenuItem Header="Feeds">
+                    <MenuItem Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}" Header="NGワードを含む未読を既読にする" />
+                </MenuItem>
             </Menu>
 
             <StatusBar>
