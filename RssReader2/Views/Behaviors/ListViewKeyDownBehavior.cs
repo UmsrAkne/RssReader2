@@ -65,6 +65,11 @@ namespace RssReader2.Views.Behaviors
                     vm = dt as MainWindowViewModel;
                     vm?.FeedListViewModel.ToggleMark();
                     break;
+
+                case Key.Return:
+                    vm = dt as MainWindowViewModel;
+                    vm?.FeedListViewModel.OpenUrlCommand.Execute();
+                    break;
             }
 
             lv.ScrollIntoView(lv.SelectedItem);
