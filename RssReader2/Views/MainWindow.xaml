@@ -37,7 +37,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -279,25 +279,26 @@
             BorderBrush="Gray"
             BorderThickness="1">
 
-            <TextBlock
-                MinHeight="40"
-                MaxHeight="200"
-                Margin="3"
-                TextWrapping="Wrap">
-                <TextBlock.Style>
-                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="True">
-                                <Setter Property="Text" Value="" />
-                            </DataTrigger>
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <TextBlock
+                    Height="80"
+                    Margin="3"
+                    TextWrapping="Wrap">
+                    <TextBlock.Style>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="True">
+                                    <Setter Property="Text" Value="" />
+                                </DataTrigger>
 
-                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
-                                <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                                <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
+                                    <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </ScrollViewer>
         </Border>
     </Grid>
 </Window>
