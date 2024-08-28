@@ -34,6 +34,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -88,7 +89,7 @@
 
         <TreeView
             Grid.Row="1"
-            Grid.RowSpan="4"
+            Grid.RowSpan="5"
             Grid.Column="0"
             ItemsSource="{Binding TreeViewVm.WebSiteTreeViewItems}">
             <i:Interaction.Behaviors>
@@ -111,9 +112,22 @@
             </TreeView.ItemContainerStyle>
         </TreeView>
 
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="5"
+            Orientation="Horizontal">
+            <ToggleButton
+                Padding="8,0"
+                Command="{Binding FeedListViewModel.ReloadUnReadFeedsCommand}"
+                Content="未読フィードのみ表示する"
+                IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}"
+                Template="{StaticResource ToggleButtonControlTemplate}" />
+        </StackPanel>
+
         <ListView
             x:Name="FeedListView"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             HorizontalContentAlignment="Stretch"
             AlternationCount="2"
@@ -274,7 +288,7 @@
         </ContentControl>
 
         <Border
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             BorderBrush="Gray"
             BorderThickness="1">
