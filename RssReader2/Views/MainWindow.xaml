@@ -98,11 +98,29 @@
 
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <TextBlock
-                        Margin="2,0"
-                        Padding="4,0"
-                        FontSize="{StaticResource BasicFontSize}"
-                        Text="{Binding Name}" />
+                    <Border Margin="2" CornerRadius="4">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGroup}" Value="False">
+                                        <Setter Property="BorderBrush" Value="LightSteelBlue" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding IsGroup}" Value="True">
+                                        <Setter Property="BorderBrush" Value="RoyalBlue" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <TextBlock
+                            Margin="2,0"
+                            Padding="4,0"
+                            FontSize="{StaticResource BasicFontSize}"
+                            Text="{Binding Name}" />
+                    </Border>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ItemContainerStyle>
