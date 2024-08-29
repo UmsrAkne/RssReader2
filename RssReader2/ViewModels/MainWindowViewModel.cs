@@ -46,6 +46,9 @@ namespace RssReader2.ViewModels
                 WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites()),
             };
 
+            TreeViewVm.WebSiteTreeViewItems.Insert(0, new WebSiteGroup() { Name = "WebSite Group1", });
+            TreeViewVm.WebSiteTreeViewItems.Insert(0, new WebSiteGroup() { Name = "WebSite Group2", });
+
             RaisePropertyChanged(nameof(TreeViewVm));
         }
 

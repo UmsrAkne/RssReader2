@@ -34,10 +34,11 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -88,7 +89,7 @@
 
         <TreeView
             Grid.Row="1"
-            Grid.RowSpan="4"
+            Grid.RowSpan="5"
             Grid.Column="0"
             ItemsSource="{Binding TreeViewVm.WebSiteTreeViewItems}">
             <i:Interaction.Behaviors>
@@ -97,11 +98,29 @@
 
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <TextBlock
-                        Margin="2,0"
-                        Padding="4,0"
-                        FontSize="{StaticResource BasicFontSize}"
-                        Text="{Binding Name}" />
+                    <Border Margin="2" CornerRadius="4">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGroup}" Value="False">
+                                        <Setter Property="BorderBrush" Value="LightSteelBlue" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding IsGroup}" Value="True">
+                                        <Setter Property="BorderBrush" Value="RoyalBlue" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <TextBlock
+                            Margin="2,0"
+                            Padding="4,0"
+                            FontSize="{StaticResource BasicFontSize}"
+                            Text="{Binding Name}" />
+                    </Border>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ItemContainerStyle>
@@ -111,9 +130,22 @@
             </TreeView.ItemContainerStyle>
         </TreeView>
 
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="5"
+            Orientation="Horizontal">
+            <ToggleButton
+                Padding="8,0"
+                Command="{Binding FeedListViewModel.ReloadUnReadFeedsCommand}"
+                Content="未読フィードのみ表示する"
+                IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}"
+                Template="{StaticResource ToggleButtonControlTemplate}" />
+        </StackPanel>
+
         <ListView
             x:Name="FeedListView"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             HorizontalContentAlignment="Stretch"
             AlternationCount="2"
@@ -274,30 +306,31 @@
         </ContentControl>
 
         <Border
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             BorderBrush="Gray"
             BorderThickness="1">
 
-            <TextBlock
-                MinHeight="40"
-                MaxHeight="200"
-                Margin="3"
-                TextWrapping="Wrap">
-                <TextBlock.Style>
-                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="True">
-                                <Setter Property="Text" Value="" />
-                            </DataTrigger>
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <TextBlock
+                    Height="80"
+                    Margin="3"
+                    TextWrapping="Wrap">
+                    <TextBlock.Style>
+                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="True">
+                                    <Setter Property="Text" Value="" />
+                                </DataTrigger>
 
-                            <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
-                                <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                                <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
+                                    <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </ScrollViewer>
         </Border>
     </Grid>
 </Window>

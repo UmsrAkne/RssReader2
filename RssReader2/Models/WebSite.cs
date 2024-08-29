@@ -52,5 +52,8 @@ namespace RssReader2.Models
 
         [NotMapped]
         public bool IsSelected { get => isSelected; set => SetProperty(ref isSelected, value); }
+
+        [NotMapped]
+        public bool IsGroup { get; set; }
     }
 }

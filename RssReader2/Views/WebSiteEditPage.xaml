@@ -29,6 +29,12 @@
                 <TextBox Width="700" Text="{Binding SiteUrl, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
+            <DockPanel Margin="0,8">
+                <TextBlock Width="60" Text="Group : " />
+                <Border Margin="5,0" />
+                <ComboBox ItemsSource="{Binding WebSiteGroups}" SelectedItem="{Binding CurrentWebSiteGroup}" />
+            </DockPanel>
+
         </StackPanel>
 
         <StackPanel
