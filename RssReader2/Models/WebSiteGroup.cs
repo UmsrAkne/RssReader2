@@ -21,5 +21,10 @@ namespace RssReader2.Models
 
         [NotMapped]
         public bool IsSelected { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RssReader2.Models;
+using RssReader2.Models.Dbs;
 
 namespace RssReader2.ViewModels
 {
@@ -11,8 +14,17 @@ namespace RssReader2.ViewModels
     {
         private string siteUrl;
         private string siteName;
+        private List<WebSiteGroup> webSiteGroups;
+        private WebSiteGroup currentWebSiteGroup;
+
+        public WebSiteEditPageViewModel(WebSiteGroupService webSiteGroupService)
+        {
+            WebSiteGroupService = webSiteGroupService;
+        }
 
         public event Action<IDialogResult> RequestClose;
+
+        public WebSiteGroupService WebSiteGroupService { get; set; }
 
         public string Title => string.Empty;
 
@@ -21,6 +33,18 @@ namespace RssReader2.ViewModels
         public string SiteUrl { get => siteUrl; set => SetProperty(ref siteUrl, value); }
 
         public WebSite WebSite { get; set; }
+
+        public List<WebSiteGroup> WebSiteGroups
+        {
+            get => webSiteGroups;
+            set => SetProperty(ref webSiteGroups, value);
+        }
+
+        public WebSiteGroup CurrentWebSiteGroup
+        {
+            get => currentWebSiteGroup;
+            set => SetProperty(ref currentWebSiteGroup, value);
+        }
 
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
@@ -38,6 +62,10 @@ namespace RssReader2.ViewModels
 
             WebSite.Title = SiteName;
             WebSite.Url = SiteUrl;
+            if (CurrentWebSiteGroup != null)
+            {
+                WebSite.GroupId = CurrentWebSiteGroup.Id;
+            }
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
@@ -50,6 +78,9 @@ namespace RssReader2.ViewModels
             WebSite = site;
             siteName = WebSite.Name;
             siteUrl = WebSite.Url;
+
+            WebSiteGroups = new List<WebSiteGroup>(WebSiteGroupService.GetAllWebSiteGroups());
+            CurrentWebSiteGroup = WebSiteGroups.FirstOrDefault(g => g.Id == WebSite.GroupId);
         }
     }
 }
