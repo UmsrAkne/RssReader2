@@ -149,6 +149,11 @@ namespace RssReader2.Models.Dbs
             feedRepository.Delete(id);
         }
 
+        public void DeleteFeeds(IEnumerable<Feed> feeds)
+        {
+            feedRepository.DeleteRange(feeds);
+        }
+
         /// <summary>
         /// 入力されたサイトIDの中からNGワードを含むフィードを抽出し、既読にします。
         /// </summary>

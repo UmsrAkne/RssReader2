@@ -20,6 +20,7 @@ namespace RssReader2
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialog<WebSiteAdditionPage, WebSiteAdditionPageViewModel>();
+            containerRegistry.RegisterDialog<WebSitesManagementPage, WebSitesManagementPageViewModel>();
             containerRegistry.RegisterDialog<GroupAdditionPage, GroupAdditionPageViewModel>();
             containerRegistry.RegisterDialog<WebSiteEditPage, WebSiteEditPageViewModel>();
             containerRegistry.RegisterDialog<NgWordAdditionPage, NgWordAdditionPageViewModel>();
