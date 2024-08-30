@@ -60,5 +60,10 @@ namespace RssReader2.Models.Dbs
         {
             throw new System.NotImplementedException();
         }
+
+        public void DeleteRange(IEnumerable<WebSite> entities)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
