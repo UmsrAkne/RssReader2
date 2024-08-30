@@ -12,12 +12,14 @@ namespace RssReader2.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class WebSitesManagementPageViewModel : BindableBase, IDialogAware
     {
+        private readonly FeedService feedService;
         private WebSiteService webSiteService;
         private bool hasItemsToDelete;
 
-        public WebSitesManagementPageViewModel(WebSiteService webSiteService)
+        public WebSitesManagementPageViewModel(WebSiteService webSiteService, FeedService feedService)
         {
             this.webSiteService = webSiteService;
+            this.feedService = feedService;
         }
 
         public event Action<IDialogResult> RequestClose;
@@ -42,9 +44,12 @@ namespace RssReader2.ViewModels
 
         public DelegateCommand DeleteWebSiteCommand => new DelegateCommand(() =>
         {
-            foreach (var w in WebSites.Where(w => w.IsSelected))
+            var sites = WebSites.Where(w => w.IsSelected).ToList();
+
+            foreach (var w in sites)
             {
                 webSiteService.DeleteWebSite(w.Id);
+                feedService.DeleteFeeds(feedService.GetFeedsByWebSiteId(w.Id));
                 WebSites.Remove(w);
             }
         });
