@@ -13,6 +13,7 @@ namespace RssReader2.ViewModels
     public class WebSitesManagementPageViewModel : BindableBase, IDialogAware
     {
         private WebSiteService webSiteService;
+        private bool hasItemsToDelete;
 
         public WebSitesManagementPageViewModel(WebSiteService webSiteService)
         {
@@ -25,6 +26,20 @@ namespace RssReader2.ViewModels
 
         public ObservableCollection<WebSite> WebSites { get; set; }
 
+        /// <summary>
+        /// 削除する予定のアイテムが存在するかを取得します。
+        /// </summary>
+        public bool HasItemsToDelete
+        {
+            get => hasItemsToDelete;
+            private set => SetProperty(ref hasItemsToDelete, value);
+        }
+
+        public DelegateCommand ToggleDeleteFlagCommand => new DelegateCommand(() =>
+        {
+            HasItemsToDelete = WebSites.Any(w => w.IsSelected);
+        });
+        
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
             RequestClose?.Invoke(new DialogResult());
