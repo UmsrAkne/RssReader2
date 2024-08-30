@@ -62,6 +62,7 @@
             <Button
                 Margin="15,0"
                 Padding="10,0"
+                Command="{Binding DeleteWebSiteCommand}"
                 Content="Delete"
                 IsEnabled="{Binding HasItemsToDelete}">
                 <Button.Style>

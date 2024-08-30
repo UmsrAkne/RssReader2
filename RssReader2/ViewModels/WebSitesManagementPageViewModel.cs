@@ -39,6 +39,15 @@ namespace RssReader2.ViewModels
         {
             HasItemsToDelete = WebSites.Any(w => w.IsSelected);
         });
+
+        public DelegateCommand DeleteWebSiteCommand => new DelegateCommand(() =>
+        {
+            foreach (var w in WebSites.Where(w => w.IsSelected))
+            {
+                webSiteService.DeleteWebSite(w.Id);
+                WebSites.Remove(w);
+            }
+        });
         
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
