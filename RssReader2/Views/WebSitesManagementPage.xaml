@@ -24,12 +24,29 @@
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:WebSite}">
                     <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="Background" Value="IndianRed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Url}" />
+
+                        <CheckBox
+                            Grid.Column="0"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            IsChecked="{Binding IsSelected}" />
+
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Url}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
