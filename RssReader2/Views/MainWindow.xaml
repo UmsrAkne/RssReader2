@@ -56,6 +56,7 @@
                 <MenuItem Header="View">
                     <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する (Ctrl + N)" />
                     <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
+                    <MenuItem Command="{Binding ShowWebSitesManagementPageCommand}" Header="ウェブサイトを管理する" />
                     <MenuItem Command="{Binding ShowGroupAdditionPageCommand}" Header="グループを追加する (Ctrl + Shift + N)" />
                     <MenuItem Command="{Binding ShowNgWordAdditionPageCommand}" Header="NGワードを追加する" />
                     <MenuItem
