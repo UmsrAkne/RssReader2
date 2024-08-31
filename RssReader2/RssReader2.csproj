@@ -3,6 +3,13 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
+        <Configurations>Debug;Release;Production</Configurations>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Production' ">
+      <OutputPath>C:\NonRegistry\RssReader2</OutputPath>
+      <DefineConstants>TRACE;PRODUCTION_RELEASE</DefineConstants>
+      <Optimize>true</Optimize>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="EFCore.BulkExtensions" Version="7.0.2" />
