@@ -28,12 +28,7 @@ namespace RssReader2.ViewModels
 
         public DelegateCommand UpdateUnreadFeedDisplayCommand => new DelegateCommand(() =>
         {
-            if (SelectedItem is not WebSite w)
-            {
-                return;
-            }
-
-            w.HasUnreadItem = FeedService.HasUnreadFeed(w.Id);
+            UpdateHasUnread(SelectedItem);
         });
 
         public IWebSiteTreeViewItem SelectedItem { get; set; }
@@ -94,6 +89,20 @@ namespace RssReader2.ViewModels
                 .Cast<IWebSiteTreeViewItem>();
 
             WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(groups.Concat(sites));
+            foreach (var w in WebSiteTreeViewItems)
+            {
+                UpdateHasUnread(w);
+            }
+        }
+
+        private void UpdateHasUnread(IWebSiteTreeViewItem item)
+        {
+            if (item is not WebSite w)
+            {
+                return;
+            }
+
+            w.HasUnreadItem = FeedService.HasUnreadFeed(w.Id);
         }
     }
 }

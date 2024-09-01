@@ -116,11 +116,34 @@
                             </Style>
                         </Border.Style>
 
-                        <TextBlock
-                            Margin="2,0"
-                            Padding="4,0"
-                            FontSize="{StaticResource BasicFontSize}"
-                            Text="{Binding Name}" />
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                Margin="2,0"
+                                Padding="4,0"
+                                FontSize="{StaticResource BasicFontSize}"
+                                Text="{Binding Name}" />
+
+                            <TextBlock
+                                Margin="2,0"
+                                FontSize="{StaticResource BasicFontSize}"
+                                Foreground="OrangeRed"
+                                Text="(up)">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasUnreadItem}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding HasUnreadItem}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
                     </Border>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
