@@ -26,7 +26,7 @@ namespace RssReader2Test.ViewModels
                 new WebSite(),
             };
 
-            var vm = new TreeViewVm(null, null);
+            var vm = new TreeViewVm(null, null, null);
             Assert.That(vm.FindSelectedItem(items).Name, Is.EqualTo("expected value"));
         }
 
@@ -47,7 +47,7 @@ namespace RssReader2Test.ViewModels
                 new WebSite(),
             };
 
-            var vm = new TreeViewVm(null, null);
+            var vm = new TreeViewVm(null, null, null);
             Assert.IsNull(vm.FindSelectedItem(items));
         }
 
@@ -69,7 +69,7 @@ namespace RssReader2Test.ViewModels
                 new WebSite(),
             };
 
-            var vm = new TreeViewVm(null, null);
+            var vm = new TreeViewVm(null, null, null);
             Assert.That(vm.FindSelectedItem(items).Name, Is.EqualTo("expected value"));
         }
     }

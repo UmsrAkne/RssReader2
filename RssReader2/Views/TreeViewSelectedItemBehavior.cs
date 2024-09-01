@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
+using RssReader2.Models;
 using RssReader2.ViewModels;
 
 namespace RssReader2.Views
@@ -25,6 +26,7 @@ namespace RssReader2.Views
             if (AssociatedObject.DataContext is MainWindowViewModel viewModel)
             {
                 viewModel.UpdateFeedsCommand.Execute();
+                viewModel.TreeViewVm.SelectedItem = (IWebSiteTreeViewItem)((TreeView)sender).SelectedItem;
             }
         }
     }
