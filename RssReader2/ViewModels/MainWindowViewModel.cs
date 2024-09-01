@@ -41,7 +41,7 @@ namespace RssReader2.ViewModels
 
             FeedListViewModel.SelectedItem = FeedListViewModel.Feeds[0];
 
-            TreeViewVm = new TreeViewVm(null, null)
+            TreeViewVm = new TreeViewVm(null, null, null)
             {
                 WebSiteTreeViewItems = new ObservableCollection<IWebSiteTreeViewItem>(new DummyWebSiteProvider().GetAllWebSites()),
             };

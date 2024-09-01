@@ -162,6 +162,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding FeedListViewModel.UpdateIsReadPropertyCommand}" CommandParameter="{Binding ElementName=FeedListView, Path=SelectedItem}" />
+                    <i:InvokeCommandAction Command="{Binding TreeViewVm.UpdateUnreadFeedDisplayCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 

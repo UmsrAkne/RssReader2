@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Prism.Commands;
 using Prism.Mvvm;
 using RssReader2.Models;
 using RssReader2.Models.Dbs;
@@ -12,10 +13,11 @@ namespace RssReader2.ViewModels
     {
         private ObservableCollection<IWebSiteTreeViewItem> webSiteTreeViewItems;
 
-        public TreeViewVm(IWebSiteProvider webSiteProvider, WebSiteGroupService webSiteGroupService)
+        public TreeViewVm(IWebSiteProvider webSiteProvider, WebSiteGroupService webSiteGroupService, FeedService feedService)
         {
             WebSiteProvider = webSiteProvider;
             WebSiteGroupService = webSiteGroupService;
+            FeedService = feedService;
         }
 
         public ObservableCollection<IWebSiteTreeViewItem> WebSiteTreeViewItems
@@ -24,7 +26,21 @@ namespace RssReader2.ViewModels
             set => SetProperty(ref webSiteTreeViewItems, value);
         }
 
+        public DelegateCommand UpdateUnreadFeedDisplayCommand => new DelegateCommand(() =>
+        {
+            if (SelectedItem is not WebSite w)
+            {
+                return;
+            }
+
+            w.HasUnreadItem = FeedService.HasUnreadFeed(w.Id);
+        });
+
+        public IWebSiteTreeViewItem SelectedItem { get; set; }
+
         private IWebSiteProvider WebSiteProvider { get; set; }
+
+        private FeedService FeedService { get; set; }
 
         private WebSiteGroupService WebSiteGroupService { get; set; }
 
@@ -39,30 +55,30 @@ namespace RssReader2.ViewModels
         /// 選択されていない場合はその子項目のコレクションを再帰的に検索します。
         /// </remarks>
         public IWebSiteTreeViewItem FindSelectedItem(IEnumerable<IWebSiteTreeViewItem> items)
-         {
-             IWebSiteTreeViewItem selectedItem = null;
+        {
+            IWebSiteTreeViewItem selectedItem = null;
 
-             foreach (var item in items)
-             {
-                 if (selectedItem != null)
-                 {
-                     return selectedItem;
-                 }
+            foreach (var item in items)
+            {
+                if (selectedItem != null)
+                {
+                    return selectedItem;
+                }
 
-                 if (item.IsSelected)
-                 {
-                     selectedItem = item;
-                     break;
-                 }
+                if (item.IsSelected)
+                {
+                    selectedItem = item;
+                    break;
+                }
 
-                 if (item.Children != null)
-                 {
-                     selectedItem = FindSelectedItem(item.Children);
-                 }
-             }
+                if (item.Children != null)
+                {
+                    selectedItem = FindSelectedItem(item.Children);
+                }
+            }
 
-             return selectedItem;
-         }
+            return selectedItem;
+        }
 
         /// <summary>
         /// 全てのウェブサイト・ウェブサイトグループを取得し、ツリービューを更新します。
