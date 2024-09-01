@@ -11,5 +11,7 @@ namespace RssReader2.Models
         public bool IsSelected { get; set; }
 
         public bool IsGroup { get; set; }
+
+        public bool HasUnreadItem { get; set; }
     }
 }

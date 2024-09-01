@@ -11,6 +11,7 @@ namespace RssReader2.Models
         private string title = string.Empty;
         private string url = string.Empty;
         private int groupId;
+        private bool hasUnreadItem;
 
         [Key]
         [Required]
@@ -55,5 +56,8 @@ namespace RssReader2.Models
 
         [NotMapped]
         public bool IsGroup { get; set; }
+
+        [NotMapped]
+        public bool HasUnreadItem { get => hasUnreadItem; set => SetProperty(ref hasUnreadItem, value); }
     }
 }
