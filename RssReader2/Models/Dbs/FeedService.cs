@@ -182,6 +182,11 @@ namespace RssReader2.Models.Dbs
             feedRepository.UpdateRange(feeds);
         }
 
+        public bool HasUnreadFeed(int webSiteId)
+        {
+            return feedRepository.GetAll().Where(f => f.ParentSiteId == webSiteId).Any(f => !f.IsRead);
+        }
+
         private void NgWordValidation(IEnumerable<Feed> feeds, IEnumerable<NgWord> ngWords)
         {
             var ngWordList = ngWords.ToList();

@@ -25,6 +25,9 @@ namespace RssReader2.Models
         [NotMapped]
         public bool IsGroup { get; set; } = true;
 
+        [NotMapped]
+        public bool HasUnreadItem { get; set; }
+
         public override string ToString()
         {
             return Name;
