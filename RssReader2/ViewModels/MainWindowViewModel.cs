@@ -208,6 +208,7 @@ namespace RssReader2.ViewModels
                 FeedListViewModel.ReloadFeeds(1);
             }
 
+            TreeViewVm.ReloadTreeViewItems();
             UiEnabled = true;
         });
 
