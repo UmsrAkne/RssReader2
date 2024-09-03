@@ -165,6 +165,13 @@
                 Content="未読フィードのみ表示する"
                 IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}"
                 Template="{StaticResource ToggleButtonControlTemplate}" />
+
+            <ToggleButton
+                Margin="10,0"
+                Padding="8,0"
+                Content="自動更新"
+                IsChecked="{Binding AutoUpdate}"
+                Template="{StaticResource ToggleButtonControlTemplate}" />
         </StackPanel>
 
         <ListView
