@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Threading;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -17,7 +18,10 @@ namespace RssReader2.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private readonly IDialogService dialogService;
+        private readonly DispatcherTimer timer;
         private bool uiEnabled = true;
+        private bool autoUpdate;
+        private ApplicationSettings applicationSettings;
 
         [Obsolete("プレビュー用。ダミーを入力するためのコンストラクタです。明示的に呼び出さないでください。")]
         public MainWindowViewModel()
@@ -64,6 +68,21 @@ namespace RssReader2.ViewModels
             TreeViewVm.ReloadTreeViewItems();
 
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
+
+            applicationSettings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
+
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMinutes(applicationSettings.AutoUpdateInterval),
+                IsEnabled = applicationSettings.AutoUpdateEnabled,
+            };
+
+            AutoUpdate = applicationSettings.AutoUpdateEnabled;
+
+            timer.Tick += (_, _) =>
+            {
+                _ = GetAllSiteRssFeedsCommandAsync.ExecuteAsync();
+            };
         }
 
         public TextWrapper TitleBarText { get; } = new ();
@@ -71,6 +90,25 @@ namespace RssReader2.ViewModels
         public TreeViewVm TreeViewVm { get; private init; }
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
+
+        public bool AutoUpdate
+        {
+            get => autoUpdate;
+            set
+            {
+                switch (value)
+                {
+                    case false:
+                        timer.Stop();
+                        break;
+                    case true:
+                        timer.Start();
+                        break;
+                }
+
+                SetProperty(ref autoUpdate, value);
+            }
+        }
 
         public FeedListViewModel FeedListViewModel { get; init; }
 
@@ -148,6 +186,14 @@ namespace RssReader2.ViewModels
                     FeedListViewModel.ReloadFeeds(1);
                 }
             }
+        });
+
+        public DelegateCommand ShowSettingPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(SettingPage), new DialogParameters(), (_) => { });
+            var settings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
+            timer.Interval = TimeSpan.FromMinutes(settings.AutoUpdateInterval);
+            AutoUpdate = settings.AutoUpdateEnabled;
         });
 
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>

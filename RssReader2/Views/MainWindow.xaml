@@ -64,10 +64,19 @@
                         Header="未読のフィードのみ表示する"
                         IsCheckable="True"
                         IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
+                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
                 </MenuItem>
+
                 <MenuItem Header="Feeds">
                     <MenuItem Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}" Header="NGワードを含む未読を既読にする" />
                 </MenuItem>
+                <MenuItem Header="Function">
+                    <MenuItem
+                        Header="自動更新"
+                        IsCheckable="True"
+                        IsChecked="{Binding AutoUpdate}" />
+                </MenuItem>
+
             </Menu>
 
             <StatusBar>
@@ -164,6 +173,13 @@
                 Command="{Binding FeedListViewModel.ReloadUnReadFeedsCommand}"
                 Content="未読フィードのみ表示する"
                 IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}"
+                Template="{StaticResource ToggleButtonControlTemplate}" />
+
+            <ToggleButton
+                Margin="10,0"
+                Padding="8,0"
+                Content="自動更新"
+                IsChecked="{Binding AutoUpdate}"
                 Template="{StaticResource ToggleButtonControlTemplate}" />
         </StackPanel>
 
