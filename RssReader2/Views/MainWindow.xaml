@@ -39,6 +39,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="70" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -373,5 +374,13 @@
                 </TextBlock>
             </ScrollViewer>
         </Border>
+
+        <ScrollViewer
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            VerticalScrollBarVisibility="Visible">
+            <TextBlock Padding="3" Text="{Binding Logger.Message}" />
+        </ScrollViewer>
     </Grid>
 </Window>
