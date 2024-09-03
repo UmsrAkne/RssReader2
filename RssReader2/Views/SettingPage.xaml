@@ -20,14 +20,14 @@
                 <TextBox
                     Width="60"
                     Margin="5,0"
-                    Text="{Binding AutoUpdateInterval, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding ApplicationSettings.AutoUpdateInterval, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="分" />
 
             </StackPanel>
             <StackPanel Margin="5" Orientation="Horizontal">
                 <ToggleButton
                     Content="自動更新を有効にする"
-                    IsChecked="{Binding AutoUpdateEnabled}"
+                    IsChecked="{Binding ApplicationSettings.AutoUpdateEnabled}"
                     Template="{StaticResource ToggleButtonControlTemplate}" />
             </StackPanel>
         </StackPanel>

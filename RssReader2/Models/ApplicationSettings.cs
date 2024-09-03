@@ -1,15 +1,26 @@
 using System.IO;
 using System.Text.Json;
+using Prism.Mvvm;
 
 namespace RssReader2.Models
 {
-    public class ApplicationSettings
+    public class ApplicationSettings : BindableBase
     {
         public readonly static string SettingFileName = "settings.json";
+        private int autoUpdateInterval = 90;
+        private bool autoUpdateEnabled;
 
-        public int AutoUpdateInterval { get; set; } = 90;
+        public int AutoUpdateInterval
+        {
+            get => autoUpdateInterval;
+            set => SetProperty(ref autoUpdateInterval, value);
+        }
 
-        public bool AutoUpdateEnabled { get; set; }
+        public bool AutoUpdateEnabled
+        {
+            get => autoUpdateEnabled;
+            set => SetProperty(ref autoUpdateEnabled, value);
+        }
 
         /// <summary>
         /// 指定したファイルパスからアプリの設定を読み取って取得します。

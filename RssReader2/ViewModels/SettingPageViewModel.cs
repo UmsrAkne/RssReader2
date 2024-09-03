@@ -9,23 +9,16 @@ namespace RssReader2.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class SettingPageViewModel : BindableBase, IDialogAware
     {
-        private int autoUpdateInterval = 90;
-        private bool autoUpdateEnabled;
+        private ApplicationSettings applicationSettings = new ();
 
         public event Action<IDialogResult> RequestClose;
 
         public string Title => string.Empty;
 
-        public int AutoUpdateInterval
+        public ApplicationSettings ApplicationSettings
         {
-            get => autoUpdateInterval;
-            set => SetProperty(ref autoUpdateInterval, value);
-        }
-
-        public bool AutoUpdateEnabled
-        {
-            get => autoUpdateEnabled;
-            set => SetProperty(ref autoUpdateEnabled, value);
+            get => applicationSettings;
+            private set => SetProperty(ref applicationSettings, value);
         }
 
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
@@ -37,20 +30,12 @@ namespace RssReader2.ViewModels
 
         public void OnDialogClosed()
         {
-            var s = new ApplicationSettings
-            {
-                AutoUpdateInterval = AutoUpdateInterval,
-                AutoUpdateEnabled = AutoUpdateEnabled,
-            };
-
-            s.SaveToJson(ApplicationSettings.SettingFileName);
+            ApplicationSettings.SaveToJson(ApplicationSettings.SettingFileName);
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            var s = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
-            AutoUpdateInterval = s.AutoUpdateInterval;
-            AutoUpdateEnabled = s.AutoUpdateEnabled;
+            ApplicationSettings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
         }
     }
 }
