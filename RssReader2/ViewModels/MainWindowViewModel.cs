@@ -91,6 +91,8 @@ namespace RssReader2.ViewModels
 
         public bool UiEnabled { get => uiEnabled; set => SetProperty(ref uiEnabled, value); }
 
+        public Logger Logger { get; set; } = new ();
+
         public bool AutoUpdate
         {
             get => autoUpdate;
@@ -255,6 +257,7 @@ namespace RssReader2.ViewModels
             }
 
             TreeViewVm.ReloadTreeViewItems();
+            Logger.Log("全てのサイトの更新を行いました。");
             UiEnabled = true;
         });
 
