@@ -6,7 +6,9 @@ namespace RssReader2.Models
 {
     public class ApplicationSettings : BindableBase
     {
-        public readonly static string SettingFileName = "settings.json";
+        // ReSharper disable once ArrangeModifiersOrder
+        public static readonly string SettingFileName = "settings.json";
+
         private int autoUpdateInterval = 90;
         private bool autoUpdateEnabled;
 
