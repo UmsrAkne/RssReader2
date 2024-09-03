@@ -14,10 +14,22 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Margin="5" Orientation="Horizontal">
-            <TextBlock Text="自動更新の間隔 : " />
-            <TextBox Width="60" Margin="5,0" />
-            <TextBlock Text="分" />
+        <StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="自動更新の間隔 : " />
+                <TextBox
+                    Width="60"
+                    Margin="5,0"
+                    Text="{Binding AutoUpdateInterval, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="分" />
+
+            </StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <ToggleButton
+                    Content="自動更新を有効にする"
+                    IsChecked="{Binding AutoUpdateEnabled}"
+                    Template="{StaticResource ToggleButtonControlTemplate}" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel
