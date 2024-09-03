@@ -24,6 +24,7 @@ namespace RssReader2
             containerRegistry.RegisterDialog<GroupAdditionPage, GroupAdditionPageViewModel>();
             containerRegistry.RegisterDialog<WebSiteEditPage, WebSiteEditPageViewModel>();
             containerRegistry.RegisterDialog<NgWordAdditionPage, NgWordAdditionPageViewModel>();
+            containerRegistry.RegisterDialog<SettingPage, SettingPageViewModel>();
 
             containerRegistry.RegisterSingleton<DatabaseContext>();
             containerRegistry.RegisterSingleton<IRepository<Feed>, FeedRepository>();

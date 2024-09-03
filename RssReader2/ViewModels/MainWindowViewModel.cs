@@ -183,6 +183,11 @@ namespace RssReader2.ViewModels
             }
         });
 
+        public DelegateCommand ShowSettingPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(SettingPage), new DialogParameters(), (_) => { });
+        });
+
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
         {
             var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
