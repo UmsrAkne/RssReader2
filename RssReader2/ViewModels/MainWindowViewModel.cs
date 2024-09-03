@@ -21,6 +21,7 @@ namespace RssReader2.ViewModels
         private readonly DispatcherTimer timer;
         private bool uiEnabled = true;
         private bool autoUpdate;
+        private ApplicationSettings applicationSettings;
 
         [Obsolete("プレビュー用。ダミーを入力するためのコンストラクタです。明示的に呼び出さないでください。")]
         public MainWindowViewModel()
@@ -68,11 +69,15 @@ namespace RssReader2.ViewModels
 
             FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
 
+            applicationSettings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
+
             timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMinutes(90),
-                IsEnabled = AutoUpdate,
+                Interval = TimeSpan.FromMinutes(applicationSettings.AutoUpdateInterval),
+                IsEnabled = applicationSettings.AutoUpdateEnabled,
             };
+
+            AutoUpdate = applicationSettings.AutoUpdateEnabled;
 
             timer.Tick += (_, _) =>
             {
@@ -181,6 +186,14 @@ namespace RssReader2.ViewModels
                     FeedListViewModel.ReloadFeeds(1);
                 }
             }
+        });
+
+        public DelegateCommand ShowSettingPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(SettingPage), new DialogParameters(), (_) => { });
+            var settings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
+            timer.Interval = TimeSpan.FromMinutes(settings.AutoUpdateInterval);
+            AutoUpdate = settings.AutoUpdateEnabled;
         });
 
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>

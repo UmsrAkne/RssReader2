@@ -64,7 +64,9 @@
                         Header="未読のフィードのみ表示する"
                         IsCheckable="True"
                         IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
+                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
                 </MenuItem>
+
                 <MenuItem Header="Feeds">
                     <MenuItem Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}" Header="NGワードを含む未読を既読にする" />
                 </MenuItem>
