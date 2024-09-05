@@ -67,9 +67,9 @@ namespace RssReader2.ViewModels
             TreeViewVm = containerProvider.Resolve<TreeViewVm>();
             TreeViewVm.ReloadTreeViewItems();
 
-            FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
-
             applicationSettings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
+            FeedListViewModel = containerProvider.Resolve<FeedListViewModel>();
+            FeedListViewModel.PageSize = applicationSettings.PageSize;
 
             timer = new DispatcherTimer
             {
@@ -200,6 +200,7 @@ namespace RssReader2.ViewModels
             var settings = ApplicationSettings.LoadJson(ApplicationSettings.SettingFileName);
             timer.Interval = TimeSpan.FromMinutes(settings.AutoUpdateInterval);
             AutoUpdate = settings.AutoUpdateEnabled;
+            FeedListViewModel.PageSize = settings.PageSize;
         });
 
         public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
