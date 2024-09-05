@@ -29,6 +29,11 @@
             Command="{Binding ShowGroupAdditionPageCommand}"
             Modifiers="Control+Shift" />
 
+        <KeyBinding
+            Key="OemComma"
+            Command="{Binding ShowSettingPageCommand}"
+            Modifiers="Control" />
+
     </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
 
@@ -65,7 +70,7 @@
                         Header="未読のフィードのみ表示する"
                         IsCheckable="True"
                         IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
-                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
+                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く (Ctrl + ,)" />
                 </MenuItem>
 
                 <MenuItem Header="Feeds">
