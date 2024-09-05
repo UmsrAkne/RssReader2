@@ -19,9 +19,9 @@ namespace RssReader2.ViewModels
     {
         private readonly IDialogService dialogService;
         private readonly DispatcherTimer timer;
+        private readonly ApplicationSettings applicationSettings;
         private bool uiEnabled = true;
         private bool autoUpdate;
-        private ApplicationSettings applicationSettings;
 
         [Obsolete("プレビュー用。ダミーを入力するためのコンストラクタです。明示的に呼び出さないでください。")]
         public MainWindowViewModel()
