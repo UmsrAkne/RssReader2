@@ -9,6 +9,7 @@ namespace RssReader2.Models
     {
         private bool isRead;
         private bool isMarked;
+        private int lineNumber;
 
         [Key]
         [Required]
@@ -51,7 +52,7 @@ namespace RssReader2.Models
         public bool IsRead { get => isRead; set => SetProperty(ref isRead, value); }
 
         [NotMapped]
-        public int LineNumber { get; set; }
+        public int LineNumber { get => lineNumber; set => SetProperty(ref lineNumber, value); }
 
         public bool AreEqual(Feed another)
         {
