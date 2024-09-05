@@ -7,7 +7,14 @@
     xmlns:viewModels="clr-namespace:RssReader2.ViewModels"
     Title="SettingPage"
     d:DataContext="{d:DesignInstance viewModels:SettingPageViewModel}"
+    Focusable="True"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
+
+    <Page.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}" />
+    </Page.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -15,6 +22,16 @@
         </Grid.RowDefinitions>
 
         <StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="１ページのフィードの表示件数" />
+                <TextBox
+                    Width="60"
+                    Margin="5,0"
+                    Text="{Binding ApplicationSettings.PageSize}" />
+                <TextBlock Text="件" />
+            </StackPanel>
+
+            <Border Margin="0,3" />
             <StackPanel Margin="5" Orientation="Horizontal">
                 <TextBlock Text="自動更新の間隔 : " />
                 <TextBox

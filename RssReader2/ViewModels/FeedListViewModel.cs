@@ -145,6 +145,11 @@ namespace RssReader2.ViewModels
                     ? FeedProvider.GetUnreadFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords)
                     : FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
 
+            for (var i = 0; i < Feeds.Count; i++)
+            {
+                feeds[i].LineNumber = i + 1;
+            }
+
             if (ShowUnreadOnly)
             {
                 return;

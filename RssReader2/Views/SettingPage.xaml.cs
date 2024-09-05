@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Controls;
 
 namespace RssReader2.Views
@@ -7,6 +8,11 @@ namespace RssReader2.Views
         public SettingPage()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Focus();
         }
     }
 }

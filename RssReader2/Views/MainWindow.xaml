@@ -14,7 +14,7 @@
     Width="1024"
     Height="768"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
-    d:DesignHeight="300"
+    d:DesignHeight="400"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
 
@@ -28,6 +28,11 @@
             Key="N"
             Command="{Binding ShowGroupAdditionPageCommand}"
             Modifiers="Control+Shift" />
+
+        <KeyBinding
+            Key="OemComma"
+            Command="{Binding ShowSettingPageCommand}"
+            Modifiers="Control" />
 
     </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
@@ -65,7 +70,7 @@
                         Header="未読のフィードのみ表示する"
                         IsCheckable="True"
                         IsChecked="{Binding FeedListViewModel.ShowUnreadOnly}" />
-                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
+                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く (Ctrl + ,)" />
                 </MenuItem>
 
                 <MenuItem Header="Feeds">
@@ -216,12 +221,31 @@
                         </i:Interaction.Triggers>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
+                            <Border Grid.Column="0" Width="40">
+                                <TextBlock Text="{Binding LineNumber, Converter={StaticResource ZeroPaddingConverter}, ConverterParameter=D4}">
+                                    <TextBlock.Style>
+                                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRead}" Value="False">
+                                                    <Setter Property="Foreground" Value="Orange" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding IsRead}" Value="True">
+                                                    <Setter Property="Foreground" Value="Black" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Border>
+
                             <Border
-                                Grid.Column="0"
+                                Grid.Column="1"
                                 Margin="0,1"
                                 Padding="5,0"
                                 BorderThickness="5,0,0,0">
@@ -280,7 +304,7 @@
 
                             </Border>
 
-                            <TextBlock Grid.Column="1" Text="{Binding PublishedAt, Converter={StaticResource DateTimeConverter}}" />
+                            <TextBlock Grid.Column="2" Text="{Binding PublishedAt, Converter={StaticResource DateTimeConverter}}" />
                         </Grid>
                     </ContentControl>
                 </DataTemplate>

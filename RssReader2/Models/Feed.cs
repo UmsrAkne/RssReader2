@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Prism.Mvvm;
 
 namespace RssReader2.Models
@@ -8,6 +9,7 @@ namespace RssReader2.Models
     {
         private bool isRead;
         private bool isMarked;
+        private int lineNumber;
 
         [Key]
         [Required]
@@ -48,6 +50,9 @@ namespace RssReader2.Models
 
         [Required]
         public bool IsRead { get => isRead; set => SetProperty(ref isRead, value); }
+
+        [NotMapped]
+        public int LineNumber { get => lineNumber; set => SetProperty(ref lineNumber, value); }
 
         public bool AreEqual(Feed another)
         {
