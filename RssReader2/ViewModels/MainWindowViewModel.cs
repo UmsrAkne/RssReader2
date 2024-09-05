@@ -108,7 +108,11 @@ namespace RssReader2.ViewModels
                         break;
                 }
 
-                SetProperty(ref autoUpdate, value);
+                if (SetProperty(ref autoUpdate, value))
+                {
+                    applicationSettings.AutoUpdateEnabled = autoUpdate;
+                    applicationSettings.SaveToJson(ApplicationSettings.SettingFileName);
+                }
             }
         }
 
