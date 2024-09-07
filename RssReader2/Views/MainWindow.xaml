@@ -18,6 +18,12 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetAllSiteRssFeedsCommandAsync}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Window.InputBindings>
         <KeyBinding
             Key="N"
