@@ -47,6 +47,13 @@
                     IsChecked="{Binding ApplicationSettings.AutoUpdateEnabled}"
                     Template="{StaticResource ToggleButtonControlTemplate}" />
             </StackPanel>
+
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <ToggleButton
+                    Content="起動時に更新する"
+                    IsChecked="{Binding ApplicationSettings.UpdateOnStartup}"
+                    Template="{StaticResource ToggleButtonControlTemplate}" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel

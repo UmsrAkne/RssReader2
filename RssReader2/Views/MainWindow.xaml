@@ -20,7 +20,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding GetAllSiteRssFeedsCommandAsync}" />
+            <i:InvokeCommandAction Command="{Binding StartupUpdateAsyncCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

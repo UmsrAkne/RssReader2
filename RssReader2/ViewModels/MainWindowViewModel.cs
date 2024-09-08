@@ -266,6 +266,17 @@ namespace RssReader2.ViewModels
             UiEnabled = true;
         });
 
+        /// <summary>
+        /// 起動時に実行する全更新のコマンドです。applicationSettings.UpdateOnStartup が true の場合にだけ動作します。
+        /// </summary>
+        public AsyncDelegateCommand StartupUpdateAsyncCommand => new AsyncDelegateCommand(async () =>
+        {
+            if (applicationSettings.UpdateOnStartup)
+            {
+                await GetAllSiteRssFeedsCommandAsync.ExecuteAsync();
+            }
+        });
+
         private NgWordService NgWordService { get; set; }
 
         private FeedService FeedService { get; set; }
