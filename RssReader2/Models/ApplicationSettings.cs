@@ -12,6 +12,7 @@ namespace RssReader2.Models
         private int autoUpdateInterval = 90;
         private bool autoUpdateEnabled;
         private int pageSize = 50;
+        private bool updateOnStartup;
 
         public int AutoUpdateInterval
         {
@@ -26,6 +27,8 @@ namespace RssReader2.Models
         }
 
         public int PageSize { get => pageSize; set => SetProperty(ref pageSize, value); }
+
+        public bool UpdateOnStartup { get => updateOnStartup; set => SetProperty(ref updateOnStartup, value); }
 
         /// <summary>
         /// 指定したファイルパスからアプリの設定を読み取って取得します。
