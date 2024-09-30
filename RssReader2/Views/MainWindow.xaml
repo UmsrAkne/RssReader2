@@ -182,10 +182,30 @@
             Grid.Column="1"
             Width="30"
             Margin="4,0"
-            Command="{Binding FeedListViewModel.PrevPageCommand}"
-            Content="⇐"
-            IsEnabled="{Binding FeedListViewModel.HasPrevPage}"
-            Template="{StaticResource ButtonCustomTemplate}" />
+            Template="{StaticResource ButtonCustomTemplate}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding FeedListViewModel.ShowUnreadOnly}" Value="False">
+                            <Setter Property="Command" Value="{Binding FeedListViewModel.PrevPageCommand}" />
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock FontSize="22" Text="⇐" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FeedListViewModel.ShowUnreadOnly}" Value="True">
+                            <Setter Property="Command" Value="{Binding FeedListViewModel.ReloadUnReadFeedsCommand}" />
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock FontSize="22" Text="↺" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
         <StackPanel
             Grid.Row="1"
