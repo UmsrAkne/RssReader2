@@ -59,6 +59,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <!--  メニューバーと、更新ボタンエリア  -->
         <StackPanel
             Grid.Row="0"
             Grid.Column="0"
@@ -110,6 +111,7 @@
 
         </StackPanel>
 
+        <!--  ウェブサイトリストツリービュー  -->
         <TreeView
             Grid.Row="1"
             Grid.RowSpan="5"
@@ -176,6 +178,7 @@
             </TreeView.ItemContainerStyle>
         </TreeView>
 
+        <!--  フィードリスト横の更新ボタン  -->
         <Button
             Grid.Row="1"
             Grid.RowSpan="5"
@@ -207,6 +210,7 @@
             </Button.Style>
         </Button>
 
+        <!--  フィードリスト上部の機能ボタンエリア  -->
         <StackPanel
             Grid.Row="1"
             Grid.Column="2"
@@ -227,6 +231,7 @@
                 Template="{StaticResource ToggleButtonControlTemplate}" />
         </StackPanel>
 
+        <!--  フィードリスト  -->
         <ListView
             x:Name="FeedListView"
             Grid.Row="2"
@@ -409,6 +414,7 @@
             </ContentControl.Style>
         </ContentControl>
 
+        <!--  選択中のフィードの詳細テキストを表示するエリア  -->
         <Border
             Grid.Row="5"
             Grid.Column="2"
@@ -437,6 +443,7 @@
             </ScrollViewer>
         </Border>
 
+        <!--  ログを表示するエリア  -->
         <ScrollViewer
             Grid.Row="6"
             Grid.Column="0"
