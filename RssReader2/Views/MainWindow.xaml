@@ -55,13 +55,15 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <!--  メニューバーと、更新ボタンエリア  -->
         <StackPanel
             Grid.Row="0"
             Grid.Column="0"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="3">
 
             <Menu>
                 <MenuItem Header="File" />
@@ -109,6 +111,7 @@
 
         </StackPanel>
 
+        <!--  ウェブサイトリストツリービュー  -->
         <TreeView
             Grid.Row="1"
             Grid.RowSpan="5"
@@ -175,9 +178,42 @@
             </TreeView.ItemContainerStyle>
         </TreeView>
 
+        <!--  フィードリスト横の更新ボタン  -->
+        <Button
+            Grid.Row="1"
+            Grid.RowSpan="5"
+            Grid.Column="1"
+            Width="30"
+            Margin="4,0"
+            Template="{StaticResource ButtonCustomTemplate}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding FeedListViewModel.ShowUnreadOnly}" Value="False">
+                            <Setter Property="Command" Value="{Binding FeedListViewModel.PrevPageCommand}" />
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock FontSize="22" Text="⇐" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FeedListViewModel.ShowUnreadOnly}" Value="True">
+                            <Setter Property="Command" Value="{Binding FeedListViewModel.ReloadUnReadFeedsCommand}" />
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock FontSize="22" Text="↺" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!--  フィードリスト上部の機能ボタンエリア  -->
         <StackPanel
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Margin="5"
             Orientation="Horizontal">
             <ToggleButton
@@ -195,10 +231,11 @@
                 Template="{StaticResource ToggleButtonControlTemplate}" />
         </StackPanel>
 
+        <!--  フィードリスト  -->
         <ListView
             x:Name="FeedListView"
             Grid.Row="2"
-            Grid.Column="1"
+            Grid.Column="2"
             HorizontalContentAlignment="Stretch"
             AlternationCount="2"
             ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}"
@@ -327,7 +364,7 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <ContentControl Grid.Row="3" Grid.Column="1">
+        <ContentControl Grid.Row="3" Grid.Column="2">
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <Style.Triggers>
@@ -377,9 +414,10 @@
             </ContentControl.Style>
         </ContentControl>
 
+        <!--  選択中のフィードの詳細テキストを表示するエリア  -->
         <Border
             Grid.Row="5"
-            Grid.Column="1"
+            Grid.Column="2"
             BorderBrush="Gray"
             BorderThickness="1">
 
@@ -405,10 +443,11 @@
             </ScrollViewer>
         </Border>
 
+        <!--  ログを表示するエリア  -->
         <ScrollViewer
             Grid.Row="6"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             VerticalScrollBarVisibility="Visible">
             <TextBlock Padding="3" Text="{Binding Logger.Message}" />
         </ScrollViewer>
