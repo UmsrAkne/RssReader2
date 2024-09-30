@@ -55,13 +55,14 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <StackPanel
             Grid.Row="0"
             Grid.Column="0"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="3">
 
             <Menu>
                 <MenuItem Header="File" />
@@ -175,9 +176,20 @@
             </TreeView.ItemContainerStyle>
         </TreeView>
 
+        <Button
+            Grid.Row="1"
+            Grid.RowSpan="5"
+            Grid.Column="1"
+            Width="30"
+            Margin="4,0"
+            Command="{Binding FeedListViewModel.PrevPageCommand}"
+            Content="⇐"
+            IsEnabled="{Binding FeedListViewModel.HasPrevPage}"
+            Template="{StaticResource ButtonCustomTemplate}" />
+
         <StackPanel
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Margin="5"
             Orientation="Horizontal">
             <ToggleButton
@@ -198,7 +210,7 @@
         <ListView
             x:Name="FeedListView"
             Grid.Row="2"
-            Grid.Column="1"
+            Grid.Column="2"
             HorizontalContentAlignment="Stretch"
             AlternationCount="2"
             ItemsSource="{Binding FeedListViewModel.Feeds, NotifyOnTargetUpdated=True}"
@@ -327,7 +339,7 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <ContentControl Grid.Row="3" Grid.Column="1">
+        <ContentControl Grid.Row="3" Grid.Column="2">
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <Style.Triggers>
@@ -379,7 +391,7 @@
 
         <Border
             Grid.Row="5"
-            Grid.Column="1"
+            Grid.Column="2"
             BorderBrush="Gray"
             BorderThickness="1">
 
@@ -408,7 +420,7 @@
         <ScrollViewer
             Grid.Row="6"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             VerticalScrollBarVisibility="Visible">
             <TextBlock Padding="3" Text="{Binding Logger.Message}" />
         </ScrollViewer>
