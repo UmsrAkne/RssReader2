@@ -141,9 +141,12 @@ namespace RssReader2.ViewModels
             }
 
             var enabledNgWords = NgWordService.GetAllNgWords().Where(w => !w.IsDeleted);
-            Feeds = new ObservableCollection<Feed>(ShowUnreadOnly
-                    ? FeedProvider.GetUnreadFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords)
-                    : FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords));
+
+            var fs = ShowUnreadOnly
+                ? FeedProvider.GetUnreadFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords)
+                : FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, pageNum, enabledNgWords);
+
+            Feeds = new ObservableCollection<Feed>(fs.OrderBy(f => f.ContainsNgWord));
 
             for (var i = 0; i < Feeds.Count; i++)
             {
