@@ -10,6 +10,7 @@ namespace RssReader2.Models
         [Required]
         public int Id { get; set; }
 
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         [Required]
         public string Word { get; set; } = string.Empty;
 

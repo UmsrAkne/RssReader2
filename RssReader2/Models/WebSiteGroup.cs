@@ -14,6 +14,8 @@ namespace RssReader2.Models
         ///     サイトの表示名
         /// </summary>
         [Required]
+
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         public string Name { get; set; } = string.Empty;
 
         [NotMapped]

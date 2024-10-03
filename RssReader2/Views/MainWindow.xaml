@@ -40,6 +40,11 @@
             Command="{Binding ShowSettingPageCommand}"
             Modifiers="Control" />
 
+        <KeyBinding
+            Key="R"
+            Command="{Binding GetAllSiteRssFeedsCommandAsync}"
+            Modifiers="Control" />
+
     </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
 
@@ -391,6 +396,14 @@
                                             Padding="10,0"
                                             Command="{Binding FeedListViewModel.NextPageCommand}"
                                             Content="-＞"
+                                            IsEnabled="{Binding FeedListViewModel.HasNextPage}"
+                                            Template="{StaticResource ButtonCustomTemplate}" />
+
+                                        <Button
+                                            Margin="8,0"
+                                            Padding="10,0"
+                                            Command="{Binding FeedListViewModel.SkipToOldestUnreadCommand}"
+                                            Content="-＞＞"
                                             IsEnabled="{Binding FeedListViewModel.HasNextPage}"
                                             Template="{StaticResource ButtonCustomTemplate}" />
                                     </StackPanel>

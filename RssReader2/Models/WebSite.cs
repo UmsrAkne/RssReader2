@@ -21,6 +21,8 @@ namespace RssReader2.Models
         ///     サイトの表示名
         /// </summary>
         [Required]
+
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         public string Title
         {
             get => title;
@@ -37,6 +39,8 @@ namespace RssReader2.Models
         ///     ウェブサイトの RSS 配信の URL
         /// </summary>
         [Required]
+
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         public string Url { get => url; set => SetProperty(ref url, value); }
 
         /// <summary>
