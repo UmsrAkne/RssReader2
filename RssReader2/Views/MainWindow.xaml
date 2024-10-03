@@ -40,6 +40,11 @@
             Command="{Binding ShowSettingPageCommand}"
             Modifiers="Control" />
 
+        <KeyBinding
+            Key="R"
+            Command="{Binding GetAllSiteRssFeedsCommandAsync}"
+            Modifiers="Control" />
+
     </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
 
