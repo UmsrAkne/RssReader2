@@ -24,12 +24,15 @@ namespace RssReader2.Models
         [Required]
         public DateTime PublishedAt { get; set; }
 
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         [Required]
         public string Description { get; set; } = string.Empty;
 
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         [Required]
         public string Title { get; set; } = string.Empty;
 
+        // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
         [Required]
         public string Url { get; set; } = string.Empty;
 
