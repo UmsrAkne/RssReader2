@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -70,6 +71,8 @@ namespace RssReader2.ViewModels
         {
             ReloadFeeds(0);
         });
+
+        public DelegateCommand SkipToOldestUnreadCommand => new DelegateCommand(SkipToOldestUnread);
 
         public DelegateCommand<Feed> UpdateIsReadPropertyCommand => new DelegateCommand<Feed>((param) =>
         {
@@ -164,6 +167,38 @@ namespace RssReader2.ViewModels
             HasPrevPage = PageNumber > 1;
             RaisePropertyChanged(nameof(HasNextPage));
             RaisePropertyChanged(nameof(HasPrevPage));
+        }
+
+        /// <summary>
+        /// 未読のフィードが存在する、一番古いページまでジャンプします。
+        /// </summary>
+        /// <remarks>
+        /// <para>このメソッドの動作には穴があります。</para>
+        /// <para>例えば、複数のページがあり、 3 ページ目が全て既読だった場合、 4 ページ目に未読が存在しても 2 ページ目にジャンプします。
+        /// これは、 3 ページ目の確認の時点で検索を打ち切るためです。パフォーマンスを優先した結果、このような仕様となっています。</para>
+        /// <para>今後、実際に機能を使い込んでみて、不便そうなら修正します。</para>
+        /// </remarks>
+        private void SkipToOldestUnread()
+        {
+             if (WebSite == null)
+             {
+                 return;
+             }
+
+             var p = 0;
+             bool hasUnreadFeeds;
+             do
+             {
+                 p++;
+
+                 // このループの目的は、古い未読フィードが存在するページの検索であるため、NGワードリストは空のリストを使い、処理を省く。
+                 hasUnreadFeeds =
+                     FeedProvider.GetFeedsByWebSiteId(WebSite.Id, PageSize, p, new List<NgWord>())
+                     .Any(f => !f.IsRead);
+             }
+             while (hasUnreadFeeds);
+
+             ReloadFeeds(p - 1);
         }
     }
 }

@@ -398,6 +398,14 @@
                                             Content="-＞"
                                             IsEnabled="{Binding FeedListViewModel.HasNextPage}"
                                             Template="{StaticResource ButtonCustomTemplate}" />
+
+                                        <Button
+                                            Margin="8,0"
+                                            Padding="10,0"
+                                            Command="{Binding FeedListViewModel.SkipToOldestUnreadCommand}"
+                                            Content="-＞＞"
+                                            IsEnabled="{Binding FeedListViewModel.HasNextPage}"
+                                            Template="{StaticResource ButtonCustomTemplate}" />
                                     </StackPanel>
                                 </Setter.Value>
                             </Setter>
