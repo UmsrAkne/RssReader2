@@ -240,6 +240,7 @@ namespace RssReader2.ViewModels
         {
             var all = WebSiteService.GetAllWebSites();
 
+            Logger.Log("RSSフィードの更新を開始します。");
             UiEnabled = false;
 
             var list = new List<Feed>();
