@@ -210,6 +210,14 @@
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding FeedListViewModel.ShowUnreadOnly}" Value="False" />
+                                <Condition Binding="{Binding FeedListViewModel.PageNumber}" Value="1" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Opacity" Value="0.3" />
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
