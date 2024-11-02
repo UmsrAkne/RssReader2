@@ -182,6 +182,25 @@ namespace RssReader2.Models.Dbs
             feedRepository.UpdateRange(feeds);
         }
 
+        public void AllFeedsAsReadByWebSiteId(int siteId)
+        {
+            var feeds = feedRepository.GetAll()
+                .Where(f => f.ParentSiteId == siteId)
+                .Where(f => !f.IsRead);
+
+            if (!feeds.Any())
+            {
+                return;
+            }
+
+            foreach (var feed in feeds)
+            {
+                feed.IsRead = true;
+            }
+
+            feedRepository.UpdateRange(feeds);
+        }
+
         public bool HasUnreadFeed(int webSiteId)
         {
             return feedRepository.GetAll().Where(f => f.ParentSiteId == webSiteId).Any(f => !f.IsRead);

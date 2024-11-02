@@ -13,5 +13,7 @@ namespace RssReader2.Models
         void UpdateFeed(Feed feed);
 
         void MarkNgWordFeedsAsReadByWebSiteId(int siteId);
+
+        void AllFeedsAsReadByWebSiteId(int siteId);
     }
 }

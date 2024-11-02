@@ -110,6 +110,20 @@ namespace RssReader2.ViewModels
             ReloadFeeds(1);
         });
 
+        /// <summary>
+        /// 現在選択中のウェブサイトのフィードを全て既読に変更します。
+        /// </summary>
+        public DelegateCommand MarkAllFeedsAsReadCommand => new DelegateCommand(() =>
+        {
+            if (WebSite == null)
+            {
+                return;
+            }
+
+            FeedProvider.AllFeedsAsReadByWebSiteId(WebSite.Id);
+            ReloadFeeds(1);
+        });
+
         private IFeedProvider FeedProvider { get; set; }
 
         private NgWordService NgWordService { get; set; }

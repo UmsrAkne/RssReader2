@@ -93,6 +93,10 @@ namespace RssReader2.Models
         {
         }
 
+        public void AllFeedsAsReadByWebSiteId(int siteId)
+        {
+        }
+
         private void AddDummies(int siteId)
         {
             var list = new List<Feed>();
