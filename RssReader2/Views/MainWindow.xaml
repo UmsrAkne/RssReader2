@@ -88,7 +88,9 @@
 
                 <MenuItem Header="Feeds">
                     <MenuItem Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}" Header="NGワードを含む未読を既読にする" />
+                    <MenuItem Command="{Binding FeedListViewModel.MarkAllFeedsAsReadCommand}" Header="選択中のウェブサイトのフィードを既読にする" />
                 </MenuItem>
+
                 <MenuItem Header="Function">
                     <MenuItem
                         Header="自動更新"

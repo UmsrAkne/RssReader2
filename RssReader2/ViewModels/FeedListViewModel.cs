@@ -106,7 +106,21 @@ namespace RssReader2.ViewModels
                 return;
             }
 
-            FeedProvider.MarkNgWordFeedsAsReadByWebSiteId(WebSite.Id);
+            FeedProvider.MarkFeedsAsReadByWebSiteId(WebSite.Id, includeNgWord: true);
+            ReloadFeeds(1);
+        });
+
+        /// <summary>
+        /// 現在選択中のウェブサイトのフィードを全て既読に変更します。
+        /// </summary>
+        public DelegateCommand MarkAllFeedsAsReadCommand => new DelegateCommand(() =>
+        {
+            if (WebSite == null)
+            {
+                return;
+            }
+
+            FeedProvider.MarkFeedsAsReadByWebSiteId(WebSite.Id, includeNgWord: false);
             ReloadFeeds(1);
         });
 
