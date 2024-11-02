@@ -182,11 +182,28 @@ namespace RssReader2.Models.Dbs
             feedRepository.UpdateRange(feeds);
         }
 
-        public void AllFeedsAsReadByWebSiteId(int siteId)
+        /// <summary>
+        /// 入力されたサイトIDの中からNGワードを含むフィードを抽出し、既読にします。
+        /// </summary>
+        /// <param name="siteId">対象とするサイトID</param>
+        /// <param name="includeNgWord">処理の対象を NGワードを含むフィード か 全てのフィードかを設定します。true の場合、NGワードを含むフィードのみ変更対象となります。</param>
+        /// <remarks>
+        /// リポジトリからサイトIDで検索、未読のフィードを抽出してそれをアップデートします。<br/>
+        /// このメソッドはデータの更新のみを実行します。NGワードのバリデーションが完了した後にコールしてください。
+        /// </remarks>
+        public void MarkFeedsAsReadByWebSiteId(int siteId, bool includeNgWord = false)
         {
-            var feeds = feedRepository.GetAll()
+            var feedsQuery = feedRepository.GetAll()
                 .Where(f => f.ParentSiteId == siteId)
                 .Where(f => !f.IsRead);
+
+            // NGワードフィルタの適用
+            if (includeNgWord)
+            {
+                feedsQuery = feedsQuery.Where(f => f.ContainsNgWord);
+            }
+
+            var feeds = feedsQuery.ToList();
 
             if (!feeds.Any())
             {

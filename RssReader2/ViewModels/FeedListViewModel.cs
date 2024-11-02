@@ -106,7 +106,7 @@ namespace RssReader2.ViewModels
                 return;
             }
 
-            FeedProvider.MarkNgWordFeedsAsReadByWebSiteId(WebSite.Id);
+            FeedProvider.MarkFeedsAsReadByWebSiteId(WebSite.Id, includeNgWord: true);
             ReloadFeeds(1);
         });
 
@@ -120,7 +120,7 @@ namespace RssReader2.ViewModels
                 return;
             }
 
-            FeedProvider.AllFeedsAsReadByWebSiteId(WebSite.Id);
+            FeedProvider.MarkFeedsAsReadByWebSiteId(WebSite.Id, includeNgWord: false);
             ReloadFeeds(1);
         });
 

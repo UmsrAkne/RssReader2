@@ -89,11 +89,7 @@ namespace RssReader2.Models
         {
         }
 
-        public void MarkNgWordFeedsAsReadByWebSiteId(int siteId)
-        {
-        }
-
-        public void AllFeedsAsReadByWebSiteId(int siteId)
+        public void MarkFeedsAsReadByWebSiteId(int siteId, bool includeNgWord = false)
         {
         }
 
