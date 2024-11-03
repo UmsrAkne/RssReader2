@@ -54,7 +54,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="70" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
@@ -457,7 +457,7 @@
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
-                                    <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
+                                    <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description, Converter={StaticResource RemoveEmptyLinesConverter}}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
