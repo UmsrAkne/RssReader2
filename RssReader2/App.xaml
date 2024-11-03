@@ -8,6 +8,7 @@
     <Application.Resources>
         <converters:DateTimeConverter x:Key="DateTimeConverter" />
         <converters:ZeroPaddingConverter x:Key="ZeroPaddingConverter" />
+        <converters:RemoveEmptyLinesConverter x:Key="RemoveEmptyLinesConverter" />
         <system:Double x:Key="BasicFontSize">15</system:Double>
         <Color x:Key="White">#FFFFFF</Color>
 

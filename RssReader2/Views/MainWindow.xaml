@@ -457,7 +457,7 @@
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding FeedListViewModel.SelectedItem.ContainsNgWord}" Value="False">
-                                    <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description}" />
+                                    <Setter Property="Text" Value="{Binding FeedListViewModel.SelectedItem.Description, Converter={StaticResource RemoveEmptyLinesConverter}}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
