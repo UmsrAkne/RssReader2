@@ -45,6 +45,11 @@
             Command="{Binding GetAllSiteRssFeedsCommandAsync}"
             Modifiers="Control" />
 
+        <KeyBinding
+            Key="L"
+            Command="{Binding FeedListViewModel.SkipToOldestUnreadCommand}"
+            Modifiers="Shift" />
+
     </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
 
