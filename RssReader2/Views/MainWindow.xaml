@@ -45,6 +45,11 @@
             Command="{Binding GetAllSiteRssFeedsCommandAsync}"
             Modifiers="Control" />
 
+        <KeyBinding
+            Key="L"
+            Command="{Binding FeedListViewModel.SkipToOldestUnreadCommand}"
+            Modifiers="Shift" />
+
     </Window.InputBindings>
     <Grid IsEnabled="{Binding UiEnabled}">
 
@@ -71,7 +76,6 @@
             Grid.ColumnSpan="3">
 
             <Menu>
-                <MenuItem Header="File" />
                 <MenuItem Header="View">
                     <MenuItem Command="{Binding ShowWebSiteAdditionPageCommand}" Header="ウェブサイトを追加する (Ctrl + N)" />
                     <MenuItem Command="{Binding ShowWebSiteEditPageCommand}" Header="ウェブサイトを編集する" />
