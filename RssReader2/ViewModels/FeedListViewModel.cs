@@ -165,9 +165,13 @@ namespace RssReader2.ViewModels
 
             Feeds = new ObservableCollection<Feed>(fs.OrderBy(f => f.ContainsNgWord));
 
+            pageNum = Math.Max(pageNum, 1);
+
             for (var i = 0; i < Feeds.Count; i++)
             {
-                feeds[i].LineNumber = i + 1;
+                feeds[i].LineNumber = ShowUnreadOnly
+                    ? i + 1
+                    : ((pageNum - 1) * pageSize) + i + 1;
             }
 
             if (ShowUnreadOnly)
