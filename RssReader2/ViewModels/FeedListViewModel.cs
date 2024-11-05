@@ -167,7 +167,7 @@ namespace RssReader2.ViewModels
 
             for (var i = 0; i < Feeds.Count; i++)
             {
-                feeds[i].LineNumber = i + 1;
+                feeds[i].LineNumber = ((pageNum - 1) * pageSize) + i + 1;
             }
 
             if (ShowUnreadOnly)
