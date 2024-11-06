@@ -28,10 +28,9 @@ namespace RssReader2.Models
         private string Version { get => version; set => SetProperty(ref version, value); }
 
         [Conditional("RELEASE")]
-        [Conditional("PRODUCTION_RELEASE")]
         private void SetVersion()
         {
-            Version = "20241105" + "a";
+            Version = "20241106" + "a";
         }
 
         [Conditional("DEBUG")]
