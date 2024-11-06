@@ -30,7 +30,7 @@ namespace RssReader2.Models
         [Conditional("RELEASE")]
         private void SetVersion()
         {
-            Version = "20241105" + "a";
+            Version = "20241106" + "a";
         }
 
         [Conditional("DEBUG")]
