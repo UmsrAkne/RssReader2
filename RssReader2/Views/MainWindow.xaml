@@ -92,6 +92,7 @@
                 <MenuItem Header="Feeds">
                     <MenuItem Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}" Header="NGワードを含む未読を既読にする" />
                     <MenuItem Command="{Binding FeedListViewModel.MarkAllFeedsAsReadCommand}" Header="選択中のウェブサイトのフィードを既読にする" />
+                    <MenuItem Command="{Binding GetAllSiteRssFeedsCommandAsync}" Header="全てのウェブサイトを更新する" />
                 </MenuItem>
 
                 <MenuItem Header="Function">
