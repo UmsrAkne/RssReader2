@@ -203,16 +203,11 @@ namespace RssReader2.ViewModels
             FeedListViewModel.PageSize = settings.PageSize;
         });
 
-        public DelegateCommand UpdateFeedsCommand => new DelegateCommand(() =>
-        {
-            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
-
-            if (currentSite is WebSite site)
-            {
-                FeedListViewModel.WebSite = site;
-            }
-        });
-
+        /// <summary>
+        /// 選択中のウェブサイトのフィード取得を非同期で実行します。<br/>
+        /// ウェブサイトを選択していない状態の場合は処理を打ち切ります。<br/>
+        /// また、更新を実施したことがログに出力されます。<br/>
+        /// </summary>
         public AsyncDelegateCommand GetRssFeedsCommandAsync => new AsyncDelegateCommand(async () =>
         {
             var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
@@ -236,6 +231,10 @@ namespace RssReader2.ViewModels
             UiEnabled = true;
         });
 
+        /// <summary>
+        /// 全てのウェブサイトのフィード取得を非同期で実行します。<br/>
+        /// また、更新を実施したことがログに出力されます。<br/>
+        /// </summary>
         public AsyncDelegateCommand GetAllSiteRssFeedsCommandAsync => new AsyncDelegateCommand(async () =>
         {
             var all = WebSiteService.GetAllWebSites();
@@ -283,5 +282,18 @@ namespace RssReader2.ViewModels
         private FeedService FeedService { get; set; }
 
         private WebSiteService WebSiteService { get; set; }
+
+        /// <summary>
+        /// ウェブサイトリストで選択中のアイテムを確認し、適切な値であれば、FeedListViewModel にセットします。
+        /// </summary>
+        public void ChangeWebSite()
+        {
+            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+
+            if (currentSite is WebSite site)
+            {
+                FeedListViewModel.WebSite = site;
+            }
+        }
     }
 }
