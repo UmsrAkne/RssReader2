@@ -283,5 +283,18 @@ namespace RssReader2.ViewModels
         private FeedService FeedService { get; set; }
 
         private WebSiteService WebSiteService { get; set; }
+
+        /// <summary>
+        /// ウェブサイトリストで選択中のアイテムを確認し、適切な値であれば、FeedListViewModel にセットします。
+        /// </summary>
+        public void ChangeWebSite()
+        {
+            var currentSite = TreeViewVm.FindSelectedItem(TreeViewVm.WebSiteTreeViewItems);
+
+            if (currentSite is WebSite site)
+            {
+                FeedListViewModel.WebSite = site;
+            }
+        }
     }
 }

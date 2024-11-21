@@ -25,7 +25,7 @@ namespace RssReader2.Views
             // DataContextを取得してMainViewModelのプロパティをコールする
             if (AssociatedObject.DataContext is MainWindowViewModel viewModel)
             {
-                viewModel.UpdateFeedsCommand.Execute();
+                viewModel.ChangeWebSite();
                 viewModel.TreeViewVm.SelectedItem = (IWebSiteTreeViewItem)((TreeView)sender).SelectedItem;
             }
         }
