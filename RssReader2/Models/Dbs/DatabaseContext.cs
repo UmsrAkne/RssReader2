@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +17,17 @@ namespace RssReader2.Models.Dbs
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string dbFileName = "db.sqlite";
-            if (!File.Exists(dbFileName))
+            var baseDir = AppContext.BaseDirectory;
+            var dbFilePath = Path.Combine(baseDir, "db.sqlite");
+
+            if (!File.Exists(dbFilePath))
             {
-                using var connection = new SqliteConnection($"Data Source={dbFileName}");
+                using var connection = new SqliteConnection($"Data Source={dbFilePath}");
                 connection.Open();
                 connection.Close();
             }
 
-            var connectionString = new SqliteConnectionStringBuilder { DataSource = dbFileName, }.ToString();
-
+            var connectionString = new SqliteConnectionStringBuilder { DataSource = dbFilePath, }.ToString();
             optionsBuilder.UseSqlite(new SqliteConnection(connectionString));
 
             // フレームワークによって発行された SQL を確認するためのコード
