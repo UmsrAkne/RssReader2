@@ -104,22 +104,31 @@
 
             </Menu>
 
-            <StatusBar>
-                <Button
-                    Margin="3"
-                    Padding="8,3"
-                    Command="{Binding GetAllSiteRssFeedsCommandAsync}"
-                    Content="Update (All)"
-                    Template="{StaticResource ButtonCustomTemplate}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-                <Button
-                    Margin="3"
-                    Padding="8,3"
-                    Command="{Binding GetRssFeedsCommandAsync}"
-                    Content="Update"
-                    Template="{StaticResource ButtonCustomTemplate}" />
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button
+                        Margin="3"
+                        Padding="8,3"
+                        Command="{Binding GetAllSiteRssFeedsCommandAsync}"
+                        Content="Update (All)"
+                        Template="{StaticResource ButtonCustomTemplate}" />
 
-                <ContentControl Margin="10,0">
+                    <Button
+                        Margin="3"
+                        Padding="8,3"
+                        Command="{Binding GetRssFeedsCommandAsync}"
+                        Content="Update"
+                        Template="{StaticResource ButtonCustomTemplate}" />
+
+                </StackPanel>
+
+                <ContentControl Grid.Column="1" Margin="10,0">
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
                             <Style.Triggers>
@@ -186,7 +195,16 @@
                     </ContentControl.Style>
                 </ContentControl>
 
-            </StatusBar>
+                <Button
+                    Grid.Column="2"
+                    Margin="20,3"
+                    Padding="8,3"
+                    HorizontalAlignment="Right"
+                    Command="{Binding FeedListViewModel.MarkNgWordFeedsAsReadCommand}"
+                    Content="Mark NG items as read"
+                    Template="{StaticResource ButtonCustomTemplate}" />
+
+            </Grid>
 
         </StackPanel>
 
