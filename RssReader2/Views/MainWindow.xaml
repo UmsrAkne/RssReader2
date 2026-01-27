@@ -10,7 +10,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:RssReader2.ViewModels"
     xmlns:views="clr-namespace:RssReader2.Views"
-    Title="{Binding TitleBarText.Title}"
+    Title="{Binding TitleBarText}"
     Width="1024"
     Height="768"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
