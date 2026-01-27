@@ -9,6 +9,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RssReader2.Models;
 using RssReader2.Models.Dbs;
+using RssReader2.Utils;
 using RssReader2.ViewModels.Commands;
 using RssReader2.Views;
 
@@ -20,6 +21,7 @@ namespace RssReader2.ViewModels
         private readonly IDialogService dialogService;
         private readonly DispatcherTimer timer;
         private readonly ApplicationSettings applicationSettings;
+        private readonly AppVersionInfo appVersionInfo = new AppVersionInfo();
         private bool uiEnabled = true;
         private bool autoUpdate;
 
@@ -85,7 +87,7 @@ namespace RssReader2.ViewModels
             };
         }
 
-        public TextWrapper TitleBarText { get; } = new ();
+        public string TitleBarText => appVersionInfo.Title;
 
         public TreeViewVm TreeViewVm { get; private init; }
 
